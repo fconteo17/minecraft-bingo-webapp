@@ -11,13 +11,16 @@ A real-time multiplayer web application for playing Minecraft Bingo matches. Tea
 ## ✨ Features
 
 - Real-time game state updates
-- Two-team competition (Red vs Blue)
+- Multiple game modes:
+  - Two-team competition (Red vs Blue)
+  - Solo mode (free-for-all with multiple players)
 - Quest completion tracking
 - Player attribution for completed quests
 - Automatic winner determination
 - Game history tracking
 - Responsive grid layout
 - Dark mode UI
+- API documentation with Swagger UI
 
 ## 🚀 Tech Stack
 
@@ -27,6 +30,7 @@ A real-time multiplayer web application for playing Minecraft Bingo matches. Tea
 - **State Management**: React Hooks
 - **Data Storage**: File-based JSON storage
 - **Real-time Updates**: Polling-based updates
+- **API Documentation**: Swagger/OpenAPI 3.0.0
 
 ## 🛠️ Getting Started
 
@@ -58,16 +62,39 @@ yarn dev
 - `/src/components` - Reusable React components
 - `/src/types` - TypeScript type definitions
 - `/src/utils` - Utility functions and game storage logic
-- `/data` - JSON file-based game storage
 
 ## 🎮 Game Rules
 
+### Team Mode
 1. Two teams compete: Red and Blue
 2. Each game has 25 Minecraft-related quests
 3. Teams race to complete quests first
 4. Winner is determined by:
    - Most completed quests, or
    - First to complete their last quest (in case of a tie)
+
+### Solo Mode
+1. Multiple players compete in a free-for-all format
+2. Each game has 25 Minecraft-related quests
+3. Players race to complete quests first
+4. Winner is the player who:
+   - Completes the most quests, or
+   - Is the first to complete their last quest (in case of a tie)
+
+## 🌐 API Documentation
+
+The application includes full API documentation using Swagger/OpenAPI 3.0.0. You can access the API documentation at:
+
+- Development: [http://localhost:3000/api-docs](http://localhost:3000/api-docs)
+- Production: [https://minecraft-bingo-webapp.vercel.app/api-docs](https://minecraft-bingo-webapp.vercel.app/api-docs)
+
+The API supports:
+- Creating new games (Teams or Solo mode)
+- Retrieving game details
+- Completing quests
+- Updating quest information
+- Ending games
+- Retrieving game history
 
 ## 💻 Development
 
