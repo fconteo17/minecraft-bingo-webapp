@@ -22,7 +22,22 @@ const playerColors = [
 const winnerColor = { bg: 'bg-green-900/50', border: 'border-green-600', text: 'text-green-100', highlight: 'text-green-300' };
 
 // Map player names to colors
-const getPlayerColorIndex = (playerName: string) => {
+const getPlayerColorIndex = (playerName: string, allPlayers?: string[]) => {
+  if (!allPlayers || allPlayers.length === 0) {
+    // Fallback to hash function if player list not provided
+    return playerName.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0) % playerColors.length;
+  }
+  
+  // Find the index of the player in the players array
+  const playerIndex = allPlayers.indexOf(playerName);
+  
+  // If player is found in the array, use their position to determine color
+  if (playerIndex !== -1) {
+    // Ensure we don't exceed available colors
+    return playerIndex % playerColors.length;
+  }
+  
+  // Fallback to hash function
   return playerName.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0) % playerColors.length;
 };
 
@@ -92,7 +107,7 @@ export default function GameInfo({ game }: GameInfoProps) {
             if (isWinner) {
               color = winnerColor;
             } else {
-              const colorIndex = getPlayerColorIndex(player);
+              const colorIndex = getPlayerColorIndex(player, players);
               color = playerColors[colorIndex];
             }
             

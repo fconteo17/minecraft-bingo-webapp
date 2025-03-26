@@ -28,8 +28,22 @@ const playerColors = [
 const winnerColor = { bg: 'bg-green-900/50', border: 'border-green-600', text: 'text-green-100', highlight: 'text-green-300' };
 
 // Map player names to colors (for consistent coloring)
-const getPlayerColorIndex = (playerName: string) => {
-  // Simple hash function to get a consistent color for a player
+const getPlayerColorIndex = (playerName: string, allPlayers?: string[]) => {
+  if (!allPlayers || allPlayers.length === 0) {
+    // Fallback to hash function if player list not provided
+    return playerName.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0) % playerColors.length;
+  }
+  
+  // Find the index of the player in the players array
+  const playerIndex = allPlayers.indexOf(playerName);
+  
+  // If player is found in the array, use their position to determine color
+  if (playerIndex !== -1) {
+    // Ensure we don't exceed available colors
+    return playerIndex % playerColors.length;
+  }
+  
+  // Fallback to hash function
   return playerName.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0) % playerColors.length;
 };
 
@@ -52,7 +66,7 @@ const getQuestStyles = (completedBy?: string, gameType?: Game['gameType'], playe
     if (winner && completedBy === winner) {
       return `${winnerColor.bg} ${winnerColor.border} ${winnerColor.text}`;
     } else {
-      const colorIndex = getPlayerColorIndex(completedBy);
+      const colorIndex = getPlayerColorIndex(completedBy, players);
       const color = playerColors[colorIndex];
       return `${color.bg} ${color.border} ${color.text}`;
     }
@@ -80,7 +94,7 @@ const getTextStyles = (completedBy?: string, gameType?: Game['gameType'], player
     if (winner && completedBy === winner) {
       return winnerColor.highlight;
     } else {
-      const colorIndex = getPlayerColorIndex(completedBy);
+      const colorIndex = getPlayerColorIndex(completedBy, players);
       return playerColors[colorIndex].highlight;
     }
   }
@@ -88,11 +102,11 @@ const getTextStyles = (completedBy?: string, gameType?: Game['gameType'], player
   return 'text-gray-400';
 };
 
-const getPlayerLabelColor = (playerName: string, winner?: string) => {
+const getPlayerLabelColor = (playerName: string, winner?: string, players?: string[]) => {
   if (winner && playerName === winner) {
     return winnerColor.highlight.replace('text-', '');
   }
-  const colorIndex = getPlayerColorIndex(playerName);
+  const colorIndex = getPlayerColorIndex(playerName, players);
   return playerColors[colorIndex].highlight.replace('text-', '');
 };
 
@@ -198,7 +212,7 @@ export default function QuestGrid({ quests, gameId, gameType, players, winner, o
                     Team: {quest.completedBy}
                   </p>
                 ) : (
-                  <p className={`text-${getPlayerLabelColor(quest.completedBy, winner)}`}>
+                  <p className={`text-${getPlayerLabelColor(quest.completedBy, winner, players)}`}>
                     Player: {quest.completedBy}
                   </p>
                 )}
