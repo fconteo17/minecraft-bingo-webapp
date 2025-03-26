@@ -5,6 +5,7 @@ import "./globals.css";
 import LiveGameButton from '../components/LiveGameButton';
 
 const inter = Inter({ subsets: ["latin"] });
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 export const metadata: Metadata = {
   title: "Minecraft Bingo",
@@ -28,6 +29,7 @@ export default function RootLayout({
           </div>
         </nav>
         {children}
+      <SpeedInsights />
       </body>
     </html>
   );
