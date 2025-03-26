@@ -1,9 +1,8 @@
 "use client";
 import { useEffect, useState } from 'react';
 import { Game } from '@/types/game';
-import GamePageClient from './games/[gameId]/GamePageClient';
 import GameInfo from '@/components/GameInfo';
-import Link from 'next/link';
+import GamePageClient from '../games/[gameId]/GamePageClient';
 
 async function fetchLiveGame(): Promise<Game | null> {
   const res = await fetch('/api/games/live');
@@ -22,7 +21,7 @@ async function fetchGameHistory(): Promise<Game[]> {
   return res.json();
 }
 
-export default function HomePage() {
+export default function LivePage() {
   const [liveGame, setLiveGame] = useState<Game | null>(null);
   const [gameHistory, setGameHistory] = useState<Game[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -51,18 +50,13 @@ export default function HomePage() {
       {liveGame ? (
         <GamePageClient game={liveGame} />
       ) : (
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-100">No Live Game</h1>
+        <div>
+          <h1 className="text-3xl font-bold text-gray-100">Game History</h1>
+          {gameHistory.map((game) => (
+            <GameInfo key={game.id} game={game} />
+          ))}
         </div>
       )}
-      <div>
-        <h2 className="text-2xl font-bold text-gray-100 mt-8">Game History</h2>
-        {gameHistory.map((game) => (
-          <Link key={game.id} href={`/games/${game.id}`} className="block mb-4">
-            <GameInfo game={game} />
-          </Link>
-        ))}
-      </div>
     </main>
   );
-}
+} 

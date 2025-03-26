@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Link from "next/link";
 import "./globals.css";
-import LiveGameButton from '../components/LiveGameButton';
 
 const inter = Inter({ subsets: ["latin"] });
 import { SpeedInsights } from "@vercel/speed-insights/next"
@@ -25,7 +24,6 @@ export default function RootLayout({
             <Link href="/" className="text-xl font-bold text-gray-100 hover:text-gray-300 transition-colors">
               Minecraft Bingo
             </Link>
-            <LiveGameButton />
           </div>
         </nav>
         {children}
