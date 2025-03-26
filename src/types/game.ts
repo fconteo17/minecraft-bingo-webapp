@@ -1,7 +1,11 @@
 export type TeamName = 'Red' | 'Blue';
 
-export interface Quest {
+interface QuestName {
   name: string;
+}
+
+export interface Quest {
+  name: string | QuestName;
   completedBy?: TeamName;
   completedByPlayer?: string;
   completedAt?: string;
