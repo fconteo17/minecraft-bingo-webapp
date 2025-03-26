@@ -75,7 +75,29 @@ yarn dev
 Create a `.env.local` file with:
 
 ```env
-NEXT_PUBLIC_API_URL=http://localhost:3000
+NEXT_PUBLIC_API_URL=http://localhost:3000  # For development
+# Use your Vercel URL in production, e.g.:
+# NEXT_PUBLIC_API_URL=https://your-app.vercel.app
+```
+
+## Deployment
+
+This project is configured for easy deployment with Vercel:
+
+1. Push your code to GitHub
+2. Import your repository in Vercel
+3. Configure environment variables
+4. Deploy!
+
+Vercel will automatically:
+- Deploy when you push to main
+- Create preview deployments for pull requests
+- Handle HTTPS and domain configuration
+
+To deploy manually:
+```bash
+npm run build
+npm run start
 ```
 
 ## Contributing
