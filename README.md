@@ -1,8 +1,14 @@
 # Minecraft Bingo
 
+[![Next.js](https://img.shields.io/badge/Next.js-15.2-000000?style=flat&logo=next.js)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?style=flat&logo=typescript)](https://www.typescriptlang.org/)
+[![TailwindCSS](https://img.shields.io/badge/TailwindCSS-4.0-38B2AC?style=flat&logo=tailwind-css)](https://tailwindcss.com/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Vercel](https://img.shields.io/badge/Vercel-Deployment-black?style=flat&logo=vercel)](https://vercel.com)
+
 A real-time multiplayer web application for playing Minecraft Bingo matches. Teams compete to complete Minecraft-related quests in a race format.
 
-## Features
+## ✨ Features
 
 - Real-time game state updates
 - Two-team competition (Red vs Blue)
@@ -13,16 +19,16 @@ A real-time multiplayer web application for playing Minecraft Bingo matches. Tea
 - Responsive grid layout
 - Dark mode UI
 
-## Tech Stack
+## 🚀 Tech Stack
 
-- **Framework**: Next.js 15.2
-- **Language**: TypeScript
-- **Styling**: TailwindCSS
+- **Framework**: [Next.js 15.2](https://nextjs.org/)
+- **Language**: [TypeScript](https://www.typescriptlang.org/)
+- **Styling**: [TailwindCSS](https://tailwindcss.com/)
 - **State Management**: React Hooks
 - **Data Storage**: File-based JSON storage
 - **Real-time Updates**: Polling-based updates
 
-## Getting Started
+## 🛠️ Getting Started
 
 1. Clone the repository:
 ```bash
@@ -46,7 +52,7 @@ yarn dev
 
 4. Open [http://localhost:3000](http://localhost:3000) with your browser to see the application.
 
-## Project Structure
+## 📁 Project Structure
 
 - `/src/app` - Next.js app router pages and layouts
 - `/src/components` - Reusable React components
@@ -54,7 +60,7 @@ yarn dev
 - `/src/utils` - Utility functions and game storage logic
 - `/data` - JSON file-based game storage
 
-## Game Rules
+## 🎮 Game Rules
 
 1. Two teams compete: Red and Blue
 2. Each game has 25 Minecraft-related quests
@@ -63,14 +69,14 @@ yarn dev
    - Most completed quests, or
    - First to complete their last quest (in case of a tie)
 
-## Development
+## 💻 Development
 
 - Run tests: `npm test`
 - Lint code: `npm run lint`
 - Build for production: `npm run build`
 - Start production server: `npm start`
 
-## Environment Variables
+## 🔧 Environment Variables
 
 Create a `.env.local` file with:
 
@@ -80,7 +86,7 @@ NEXT_PUBLIC_API_URL=http://localhost:3000  # For development
 # NEXT_PUBLIC_API_URL=https://your-app.vercel.app
 ```
 
-## Deployment
+## 🚢 Deployment
 
 This project is configured for easy deployment with Vercel:
 
@@ -100,7 +106,7 @@ npm run build
 npm run start
 ```
 
-## Contributing
+## 🤝 Contributing
 
 1. Fork the repository
 2. Create a feature branch
@@ -108,6 +114,6 @@ npm run start
 4. Push to the branch
 5. Open a Pull Request
 
-## License
+## 📄 License
 
-MIT License - see LICENSE file for details
+This project is licensed under the [MIT License](LICENSE) - see the LICENSE file for details
