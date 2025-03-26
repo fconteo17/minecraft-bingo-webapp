@@ -7,7 +7,7 @@ interface GameInfoProps {
 // Define the same player colors as in QuestGrid for consistency
 const playerColors = [
   { bg: 'bg-purple-900/50', border: 'border-purple-600', text: 'text-purple-100', highlight: 'text-purple-300' },
-  { bg: 'bg-green-900/50', border: 'border-green-600', text: 'text-green-100', highlight: 'text-green-300' },
+  // Remove green from regular colors since it's reserved for the winner
   { bg: 'bg-yellow-900/50', border: 'border-yellow-600', text: 'text-yellow-100', highlight: 'text-yellow-300' },
   { bg: 'bg-pink-900/50', border: 'border-pink-600', text: 'text-pink-100', highlight: 'text-pink-300' },
   { bg: 'bg-indigo-900/50', border: 'border-indigo-600', text: 'text-indigo-100', highlight: 'text-indigo-300' },
@@ -17,6 +17,9 @@ const playerColors = [
   { bg: 'bg-lime-900/50', border: 'border-lime-600', text: 'text-lime-100', highlight: 'text-lime-300' },
   { bg: 'bg-emerald-900/50', border: 'border-emerald-600', text: 'text-emerald-100', highlight: 'text-emerald-300' },
 ];
+
+// Winner color - exclusive for the winner
+const winnerColor = { bg: 'bg-green-900/50', border: 'border-green-600', text: 'text-green-100', highlight: 'text-green-300' };
 
 // Map player names to colors
 const getPlayerColorIndex = (playerName: string) => {
@@ -82,25 +85,27 @@ export default function GameInfo({ game }: GameInfoProps) {
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
           {players.map((player) => {
             const completedCount = completedQuests[player]?.length || 0;
-            const colorIndex = getPlayerColorIndex(player);
-            const color = playerColors[colorIndex];
+            const isWinner = winner === player;
+            
+            // Use winner color for the winner, otherwise use player's assigned color
+            let color;
+            if (isWinner) {
+              color = winnerColor;
+            } else {
+              const colorIndex = getPlayerColorIndex(player);
+              color = playerColors[colorIndex];
+            }
             
             return (
               <div 
                 key={player}
-                className={`p-2 rounded-lg border ${
-                  winner === player
-                    ? 'bg-emerald-900/50 border-emerald-600'
-                    : `${color.bg} ${color.border}`
-                }`}
+                className={`p-2 rounded-lg border ${color.bg} ${color.border}`}
               >
                 <div className="flex justify-between items-center">
                   <h3 className={`font-medium ${color.text}`}>
                     {player}
                   </h3>
-                  <p className={`text-sm ${
-                    winner === player ? 'text-emerald-300' : color.highlight
-                  }`}>
+                  <p className={`text-sm ${color.highlight}`}>
                     {completedCount} Quests
                   </p>
                 </div>

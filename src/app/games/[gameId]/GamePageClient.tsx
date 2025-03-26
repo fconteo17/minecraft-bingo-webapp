@@ -75,6 +75,7 @@ export default function GamePageClient({ game: initialGame }: GamePageClientProp
         gameId={game.id}
         gameType={game.gameType}
         players={game.players}
+        winner={game.winner}
         onUpdate={handleQuestUpdate}
       />
     </main>

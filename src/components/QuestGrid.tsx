@@ -6,13 +6,14 @@ interface QuestGridProps {
   gameId: string;
   gameType: Game['gameType'];
   players?: string[];
+  winner?: string;
   onUpdate: (quests: Quest[]) => void;
 }
 
 // Define a set of colors for solo players
 const playerColors = [
   { bg: 'bg-purple-900/50', border: 'border-purple-600', text: 'text-purple-100', highlight: 'text-purple-300' },
-  { bg: 'bg-green-900/50', border: 'border-green-600', text: 'text-green-100', highlight: 'text-green-300' },
+  // Remove green from regular colors since it's reserved for the winner
   { bg: 'bg-yellow-900/50', border: 'border-yellow-600', text: 'text-yellow-100', highlight: 'text-yellow-300' },
   { bg: 'bg-pink-900/50', border: 'border-pink-600', text: 'text-pink-100', highlight: 'text-pink-300' },
   { bg: 'bg-indigo-900/50', border: 'border-indigo-600', text: 'text-indigo-100', highlight: 'text-indigo-300' },
@@ -23,13 +24,16 @@ const playerColors = [
   { bg: 'bg-emerald-900/50', border: 'border-emerald-600', text: 'text-emerald-100', highlight: 'text-emerald-300' },
 ];
 
+// Winner color - exclusive for the winner
+const winnerColor = { bg: 'bg-green-900/50', border: 'border-green-600', text: 'text-green-100', highlight: 'text-green-300' };
+
 // Map player names to colors (for consistent coloring)
 const getPlayerColorIndex = (playerName: string) => {
   // Simple hash function to get a consistent color for a player
   return playerName.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0) % playerColors.length;
 };
 
-const getQuestStyles = (completedBy?: string, gameType?: Game['gameType'], players?: string[]) => {
+const getQuestStyles = (completedBy?: string, gameType?: Game['gameType'], players?: string[], winner?: string) => {
   if (!completedBy) {
     return 'bg-gray-800 border-gray-700 text-gray-100';
   }
@@ -44,16 +48,20 @@ const getQuestStyles = (completedBy?: string, gameType?: Game['gameType'], playe
         return 'bg-gray-800 border-gray-700 text-gray-100';
     }
   } else if (gameType === 'Solo' && players?.includes(completedBy)) {
-    // For solo games, use the player color mapping
-    const colorIndex = getPlayerColorIndex(completedBy);
-    const color = playerColors[colorIndex];
-    return `${color.bg} ${color.border} ${color.text}`;
+    // For solo games, use winner color if completed by winner, otherwise player color
+    if (winner && completedBy === winner) {
+      return `${winnerColor.bg} ${winnerColor.border} ${winnerColor.text}`;
+    } else {
+      const colorIndex = getPlayerColorIndex(completedBy);
+      const color = playerColors[colorIndex];
+      return `${color.bg} ${color.border} ${color.text}`;
+    }
   }
 
   return 'bg-gray-800 border-gray-700 text-gray-100';
 };
 
-const getTextStyles = (completedBy?: string, gameType?: Game['gameType'], players?: string[]) => {
+const getTextStyles = (completedBy?: string, gameType?: Game['gameType'], players?: string[], winner?: string) => {
   if (!completedBy) {
     return 'text-gray-400';
   }
@@ -68,20 +76,27 @@ const getTextStyles = (completedBy?: string, gameType?: Game['gameType'], player
         return 'text-gray-400';
     }
   } else if (gameType === 'Solo' && players?.includes(completedBy)) {
-    // For solo games, use the player color mapping
-    const colorIndex = getPlayerColorIndex(completedBy);
-    return playerColors[colorIndex].highlight;
+    // For solo games, use winner color if completed by winner, otherwise player color
+    if (winner && completedBy === winner) {
+      return winnerColor.highlight;
+    } else {
+      const colorIndex = getPlayerColorIndex(completedBy);
+      return playerColors[colorIndex].highlight;
+    }
   }
 
   return 'text-gray-400';
 };
 
-const getPlayerLabelColor = (playerName: string) => {
+const getPlayerLabelColor = (playerName: string, winner?: string) => {
+  if (winner && playerName === winner) {
+    return winnerColor.highlight.replace('text-', '');
+  }
   const colorIndex = getPlayerColorIndex(playerName);
   return playerColors[colorIndex].highlight.replace('text-', '');
 };
 
-export default function QuestGrid({ quests, gameId, gameType, players, onUpdate }: QuestGridProps) {
+export default function QuestGrid({ quests, gameId, gameType, players, winner, onUpdate }: QuestGridProps) {
   const [editingQuest, setEditingQuest] = useState<string | null>(null);
   const [newQuestName, setNewQuestName] = useState('');
 
@@ -150,7 +165,7 @@ export default function QuestGrid({ quests, gameId, gameType, players, onUpdate 
             key={`${questName}-${index}`}
             className={`
               p-3 rounded-lg border
-              ${getQuestStyles(quest.completedBy, gameType, players)}
+              ${getQuestStyles(quest.completedBy, gameType, players, winner)}
               transition-colors duration-200
               h-28 flex flex-col justify-between
             `}
@@ -175,7 +190,7 @@ export default function QuestGrid({ quests, gameId, gameType, players, onUpdate 
             </h3>
             {quest.completedBy && (
               <div className="text-sm">
-                <p className={`${getTextStyles(quest.completedBy, gameType, players)} truncate`}>
+                <p className={`${getTextStyles(quest.completedBy, gameType, players, winner)} truncate`}>
                   By: {quest.completedByPlayer}
                 </p>
                 {gameType === 'Teams' ? (
@@ -183,7 +198,7 @@ export default function QuestGrid({ quests, gameId, gameType, players, onUpdate 
                     Team: {quest.completedBy}
                   </p>
                 ) : (
-                  <p className={`text-${getPlayerLabelColor(quest.completedBy)}`}>
+                  <p className={`text-${getPlayerLabelColor(quest.completedBy, winner)}`}>
                     Player: {quest.completedBy}
                   </p>
                 )}
