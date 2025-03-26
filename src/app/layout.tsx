@@ -2,14 +2,14 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Link from "next/link";
 import "./globals.css";
+import { Analytics } from '@vercel/analytics/react'
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const inter = Inter({ subsets: ["latin"] });
-import { SpeedInsights } from "@vercel/speed-insights/next"
-import { Analytics } from '@vercel/analytics/next';
 
 export const metadata: Metadata = {
   title: "Minecraft Bingo",
-  description: "Track and display Minecraft Bingo game matches",
+  description: "Multiplayer Minecraft Bingo game for teams or free-for-all",
 };
 
 export default function RootLayout({
@@ -20,16 +20,23 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body className={`${inter.className} bg-gray-900 text-gray-100 min-h-screen`}>
-        <nav className="bg-gray-800 shadow-lg border-b border-gray-700">
-          <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-            <Link href="/" className="text-xl font-bold text-gray-100 hover:text-gray-300 transition-colors">
-              Minecraft Bingo
-            </Link>
-          </div>
-        </nav>
-        {children}
-      <SpeedInsights />
-      <Analytics />
+        <div className="min-h-screen bg-gray-900 text-gray-100">
+          <header className="bg-gray-800 border-b border-gray-700">
+            <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+              <h1 className="text-xl font-bold">
+                <Link href="/" className="hover:text-blue-400">Minecraft Bingo</Link>
+              </h1>
+              <nav>
+                <ul className="flex space-x-4">
+                  <li><Link href="/api-docs" className="hover:text-blue-400">API Docs</Link></li>
+                </ul>
+              </nav>
+            </div>
+          </header>
+          {children}
+        </div>
+        <SpeedInsights />
+        <Analytics />
       </body>
     </html>
   );

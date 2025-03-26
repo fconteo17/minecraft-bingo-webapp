@@ -1,4 +1,6 @@
 export type TeamName = 'Red' | 'Blue';
+export type PlayerName = string;
+export type GameType = 'Teams' | 'Solo';
 
 interface QuestName {
   name: string;
@@ -6,7 +8,7 @@ interface QuestName {
 
 export interface Quest {
   name: string | QuestName;
-  completedBy?: TeamName;
+  completedBy?: TeamName | PlayerName;
   completedByPlayer?: string;
   completedAt?: string;
 }
@@ -14,23 +16,27 @@ export interface Quest {
 export interface Game {
   id: string;
   timestamp: string;
-  teams: [TeamName, TeamName];
+  gameType: GameType;
+  teams?: [TeamName, TeamName];
+  players?: PlayerName[];
   quests: Quest[];
-  winner?: TeamName;
+  winner?: TeamName | PlayerName;
   completedQuests: {
-    [K in TeamName]: string[];
+    [key: string]: string[];
   };
 }
 
 export interface GameStartRequest {
-  team1Name: TeamName;
-  team2Name: TeamName;
+  gameType: GameType;
+  team1Name?: TeamName;
+  team2Name?: TeamName;
+  players?: PlayerName[];
   quests: string[];
 }
 
 export interface QuestCompletionRequest {
   gameId: string;
-  teamName: TeamName;
+  teamName?: TeamName;
   playerName: string;
   questName: string;
 } 

@@ -1,35 +1,87 @@
-import { Quest, TeamName } from '@/types/game';
+import { Quest, Game } from '@/types/game';
 import { useEffect, useState, useCallback } from 'react';
 
 interface QuestGridProps {
   quests: Quest[];
   gameId: string;
+  gameType: Game['gameType'];
+  players?: string[];
   onUpdate: (quests: Quest[]) => void;
 }
 
-const getQuestStyles = (completedBy?: TeamName) => {
-  switch (completedBy) {
-    case 'Red':
-      return 'bg-red-900/50 border-red-600 text-red-100';
-    case 'Blue':
-      return 'bg-blue-900/50 border-blue-600 text-blue-100';
-    default:
-      return 'bg-gray-800 border-gray-700 text-gray-100';
-  }
+// Define a set of colors for solo players
+const playerColors = [
+  { bg: 'bg-purple-900/50', border: 'border-purple-600', text: 'text-purple-100', highlight: 'text-purple-300' },
+  { bg: 'bg-green-900/50', border: 'border-green-600', text: 'text-green-100', highlight: 'text-green-300' },
+  { bg: 'bg-yellow-900/50', border: 'border-yellow-600', text: 'text-yellow-100', highlight: 'text-yellow-300' },
+  { bg: 'bg-pink-900/50', border: 'border-pink-600', text: 'text-pink-100', highlight: 'text-pink-300' },
+  { bg: 'bg-indigo-900/50', border: 'border-indigo-600', text: 'text-indigo-100', highlight: 'text-indigo-300' },
+  { bg: 'bg-teal-900/50', border: 'border-teal-600', text: 'text-teal-100', highlight: 'text-teal-300' },
+  { bg: 'bg-orange-900/50', border: 'border-orange-600', text: 'text-orange-100', highlight: 'text-orange-300' },
+  { bg: 'bg-cyan-900/50', border: 'border-cyan-600', text: 'text-cyan-100', highlight: 'text-cyan-300' },
+  { bg: 'bg-lime-900/50', border: 'border-lime-600', text: 'text-lime-100', highlight: 'text-lime-300' },
+  { bg: 'bg-emerald-900/50', border: 'border-emerald-600', text: 'text-emerald-100', highlight: 'text-emerald-300' },
+];
+
+// Map player names to colors (for consistent coloring)
+const getPlayerColorIndex = (playerName: string) => {
+  // Simple hash function to get a consistent color for a player
+  return playerName.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0) % playerColors.length;
 };
 
-const getTextStyles = (completedBy?: TeamName) => {
-  switch (completedBy) {
-    case 'Red':
-      return 'text-red-300';
-    case 'Blue':
-      return 'text-blue-300';
-    default:
-      return 'text-gray-400';
+const getQuestStyles = (completedBy?: string, gameType?: Game['gameType'], players?: string[]) => {
+  if (!completedBy) {
+    return 'bg-gray-800 border-gray-700 text-gray-100';
   }
+
+  if (gameType === 'Teams') {
+    switch (completedBy) {
+      case 'Red':
+        return 'bg-red-900/50 border-red-600 text-red-100';
+      case 'Blue':
+        return 'bg-blue-900/50 border-blue-600 text-blue-100';
+      default:
+        return 'bg-gray-800 border-gray-700 text-gray-100';
+    }
+  } else if (gameType === 'Solo' && players?.includes(completedBy)) {
+    // For solo games, use the player color mapping
+    const colorIndex = getPlayerColorIndex(completedBy);
+    const color = playerColors[colorIndex];
+    return `${color.bg} ${color.border} ${color.text}`;
+  }
+
+  return 'bg-gray-800 border-gray-700 text-gray-100';
 };
 
-export default function QuestGrid({ quests, gameId, onUpdate }: QuestGridProps) {
+const getTextStyles = (completedBy?: string, gameType?: Game['gameType'], players?: string[]) => {
+  if (!completedBy) {
+    return 'text-gray-400';
+  }
+
+  if (gameType === 'Teams') {
+    switch (completedBy) {
+      case 'Red':
+        return 'text-red-300';
+      case 'Blue':
+        return 'text-blue-300';
+      default:
+        return 'text-gray-400';
+    }
+  } else if (gameType === 'Solo' && players?.includes(completedBy)) {
+    // For solo games, use the player color mapping
+    const colorIndex = getPlayerColorIndex(completedBy);
+    return playerColors[colorIndex].highlight;
+  }
+
+  return 'text-gray-400';
+};
+
+const getPlayerLabelColor = (playerName: string) => {
+  const colorIndex = getPlayerColorIndex(playerName);
+  return playerColors[colorIndex].highlight.replace('text-', '');
+};
+
+export default function QuestGrid({ quests, gameId, gameType, players, onUpdate }: QuestGridProps) {
   const [editingQuest, setEditingQuest] = useState<string | null>(null);
   const [newQuestName, setNewQuestName] = useState('');
 
@@ -98,7 +150,7 @@ export default function QuestGrid({ quests, gameId, onUpdate }: QuestGridProps) 
             key={`${questName}-${index}`}
             className={`
               p-3 rounded-lg border
-              ${getQuestStyles(quest.completedBy)}
+              ${getQuestStyles(quest.completedBy, gameType, players)}
               transition-colors duration-200
               h-28 flex flex-col justify-between
             `}
@@ -123,12 +175,18 @@ export default function QuestGrid({ quests, gameId, onUpdate }: QuestGridProps) 
             </h3>
             {quest.completedBy && (
               <div className="text-sm">
-                <p className={`${getTextStyles(quest.completedBy)} truncate`}>
+                <p className={`${getTextStyles(quest.completedBy, gameType, players)} truncate`}>
                   By: {quest.completedByPlayer}
                 </p>
-                <p className={quest.completedBy === 'Red' ? 'text-red-400' : 'text-blue-400'}>
-                  Team: {quest.completedBy}
-                </p>
+                {gameType === 'Teams' ? (
+                  <p className={quest.completedBy === 'Red' ? 'text-red-400' : 'text-blue-400'}>
+                    Team: {quest.completedBy}
+                  </p>
+                ) : (
+                  <p className={`text-${getPlayerLabelColor(quest.completedBy)}`}>
+                    Player: {quest.completedBy}
+                  </p>
+                )}
               </div>
             )}
           </div>

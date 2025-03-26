@@ -1,0 +1,657 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Minecraft Bingo API",
+    "description": "API for managing Minecraft Bingo games with both team-based and solo (free-for-all) modes",
+    "version": "1.0.0",
+    "contact": {
+      "email": "fconteo17@gmail.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "/api",
+      "description": "https://minecraft-bingo-webapp.vercel.app/"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Games",
+      "description": "Game management endpoints"
+    }
+  ],
+  "paths": {
+    "/games": {
+      "get": {
+        "tags": ["Games"],
+        "summary": "Get all games",
+        "description": "Retrieves a list of all games, ordered by timestamp (newest first)",
+        "operationId": "getGames",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Game"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/games/start": {
+      "post": {
+        "tags": ["Games"],
+        "summary": "Start a new game",
+        "description": "Creates a new game with the specified teams/players and quests",
+        "operationId": "startGame",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GameStartRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Game created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Game"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/games/live": {
+      "get": {
+        "tags": ["Games"],
+        "summary": "Get currently active game",
+        "description": "Retrieves the currently active game if one exists",
+        "operationId": "getLiveGame",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "game": {
+                      "$ref": "#/components/schemas/Game"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/games/{gameId}": {
+      "get": {
+        "tags": ["Games"],
+        "summary": "Get game by ID",
+        "description": "Retrieves a specific game by its ID",
+        "operationId": "getGameById",
+        "parameters": [
+          {
+            "name": "gameId",
+            "in": "path",
+            "description": "ID of the game to retrieve",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Game"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Game not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/games/{gameId}/complete": {
+      "post": {
+        "tags": ["Games"],
+        "summary": "Complete a quest",
+        "description": "Marks a quest as completed by a team or player",
+        "operationId": "completeQuest",
+        "parameters": [
+          {
+            "name": "gameId",
+            "in": "path",
+            "description": "ID of the game",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuestCompletionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Quest completed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Game"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Game or quest not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/games/{gameId}/updateQuest": {
+      "post": {
+        "tags": ["Games"],
+        "summary": "Update quest name",
+        "description": "Updates the name of a quest in a game",
+        "operationId": "updateQuest",
+        "parameters": [
+          {
+            "name": "gameId",
+            "in": "path",
+            "description": "ID of the game",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["gameId", "questName", "newQuestName"],
+                "properties": {
+                  "gameId": {
+                    "type": "string",
+                    "format": "uuid",
+                    "description": "ID of the game"
+                  },
+                  "questName": {
+                    "type": "string",
+                    "description": "Current name of the quest"
+                  },
+                  "newQuestName": {
+                    "type": "string",
+                    "description": "New name for the quest"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Quest updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Game"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Game or quest not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/games/{gameId}/end": {
+      "post": {
+        "tags": ["Games"],
+        "summary": "End a game",
+        "description": "Ends a game and determines the winner",
+        "operationId": "endGame",
+        "parameters": [
+          {
+            "name": "gameId",
+            "in": "path",
+            "description": "ID of the game to end",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Game ended successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Game"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Game not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "TeamName": {
+        "type": "string",
+        "enum": ["Red", "Blue"]
+      },
+      "GameType": {
+        "type": "string",
+        "enum": ["Teams", "Solo"],
+        "description": "Type of game: Teams (Red vs Blue) or Solo (free-for-all)"
+      },
+      "Quest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object",
+                "required": ["name"],
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
+            "description": "Name of the quest"
+          },
+          "completedBy": {
+            "oneOf": [
+              {
+                "type": "string",
+                "enum": ["Red", "Blue"]
+              },
+              {
+                "type": "string",
+                "description": "Player name in solo games"
+              }
+            ],
+            "description": "Team or player that completed the quest"
+          },
+          "completedByPlayer": {
+            "type": "string",
+            "description": "Name of the player who completed the quest"
+          },
+          "completedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Timestamp when the quest was completed"
+          }
+        }
+      },
+      "Game": {
+        "type": "object",
+        "required": ["id", "timestamp", "gameType", "quests", "completedQuests"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Unique identifier for the game"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When the game was created"
+          },
+          "gameType": {
+            "type": "string",
+            "enum": ["Teams", "Solo"],
+            "description": "Type of game: Teams (Red vs Blue) or Solo (free-for-all)"
+          },
+          "teams": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["Red", "Blue"]
+            },
+            "minItems": 2,
+            "maxItems": 2,
+            "description": "The two teams competing (only in Teams game type)"
+          },
+          "players": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 2,
+            "description": "Players competing in the game (only in Solo game type)"
+          },
+          "quests": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "oneOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "object",
+                      "required": ["name"],
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  ],
+                  "description": "Name of the quest"
+                },
+                "completedBy": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "enum": ["Red", "Blue"]
+                    },
+                    {
+                      "type": "string",
+                      "description": "Player name in solo games"
+                    }
+                  ],
+                  "description": "Team or player that completed the quest"
+                },
+                "completedByPlayer": {
+                  "type": "string",
+                  "description": "Name of the player who completed the quest"
+                },
+                "completedAt": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "Timestamp when the quest was completed"
+                }
+              }
+            },
+            "minItems": 25,
+            "maxItems": 25,
+            "description": "List of quests in the game"
+          },
+          "winner": {
+            "oneOf": [
+              {
+                "type": "string",
+                "enum": ["Red", "Blue"]
+              },
+              {
+                "type": "string",
+                "description": "Player name in solo games"
+              }
+            ],
+            "description": "Winner of the game (team or player)"
+          },
+          "completedQuests": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "description": "Map of completed quests by team or player"
+          }
+        }
+      },
+      "GameStartRequest": {
+        "type": "object",
+        "required": ["gameType", "quests"],
+        "properties": {
+          "gameType": {
+            "type": "string",
+            "enum": ["Teams", "Solo"],
+            "description": "Type of game: Teams (Red vs Blue) or Solo (free-for-all)"
+          },
+          "team1Name": {
+            "type": "string",
+            "enum": ["Red", "Blue"],
+            "description": "Name of the first team (required for Teams game type)"
+          },
+          "team2Name": {
+            "type": "string",
+            "enum": ["Red", "Blue"],
+            "description": "Name of the second team (required for Teams game type)"
+          },
+          "players": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 2,
+            "description": "List of players (required for Solo game type)"
+          },
+          "quests": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 25,
+            "maxItems": 25,
+            "description": "List of quest names"
+          }
+        }
+      },
+      "QuestCompletionRequest": {
+        "type": "object",
+        "required": ["gameId", "playerName", "questName"],
+        "properties": {
+          "gameId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "ID of the game"
+          },
+          "teamName": {
+            "type": "string",
+            "enum": ["Red", "Blue"],
+            "description": "Name of the team (required for Teams game type)"
+          },
+          "playerName": {
+            "type": "string",
+            "description": "Name of the player who completed the quest"
+          },
+          "questName": {
+            "type": "string",
+            "description": "Name of the completed quest"
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "Error message"
+          }
+        }
+      }
+    }
+  }
+} 
