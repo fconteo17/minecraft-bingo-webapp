@@ -5,6 +5,7 @@ import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 import { SpeedInsights } from "@vercel/speed-insights/next"
+import { Analytics } from '@vercel/analytics/next';
 
 export const metadata: Metadata = {
   title: "Minecraft Bingo",
@@ -28,6 +29,7 @@ export default function RootLayout({
         </nav>
         {children}
       <SpeedInsights />
+      <Analytics />
       </body>
     </html>
   );
