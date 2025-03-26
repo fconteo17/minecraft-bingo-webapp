@@ -135,7 +135,7 @@ export default function ApiDocsLayout({
           border-radius: 4px;
         }
         .swagger-ui .opblock .opblock-summary-description {
-          color: #a0aec0;
+          color: #cbd5e0;
         }
         
         /* Tables */
@@ -182,10 +182,10 @@ export default function ApiDocsLayout({
           font-weight: 500;
         }
         .swagger-ui .parameter__type {
-          color: #a0aec0;
+          color: #cbd5e0;
         }
         .swagger-ui .parameter__in {
-          color: #a0aec0;
+          color: #cbd5e0;
         }
         .swagger-ui .parameter__deprecated {
           color: #e53e3e;
@@ -193,10 +193,10 @@ export default function ApiDocsLayout({
         
         /* Schema */
         .swagger-ui .prop-format {
-          color: #a0aec0;
+          color: #cbd5e0;
         }
         .swagger-ui .prop-type {
-          color: #38b2ac;
+          color: #4fd1c5;
         }
         
         /* Inputs and buttons */
@@ -277,6 +277,58 @@ export default function ApiDocsLayout({
         }
         .swagger-ui .info .title small.version-stamp {
           background-color: #38a169 !important;
+        }
+        
+        /* Request body and schema text */
+        .swagger-ui .opblock-section-header > label {
+          color: #f7fafc;
+        }
+        .swagger-ui .opblock-section-header h4 {
+          color: #f7fafc;
+        }
+        .swagger-ui .table-container .opblock-description-wrapper p,
+        .swagger-ui .opblock-description-wrapper p, 
+        .swagger-ui .opblock-external-docs-wrapper p, 
+        .swagger-ui .opblock-title_normal p {
+          color: #e2e8f0;
+        }
+        .swagger-ui .model-box {
+          background-color: #2d3748;
+        }
+        .swagger-ui section.models .model-container {
+          background-color: #2d3748;
+        }
+        .swagger-ui .model-box-control:focus, 
+        .swagger-ui .models-control:focus {
+          outline: none;
+        }
+        .swagger-ui section.models h4 {
+          color: #f7fafc;
+        }
+        .swagger-ui .renderedMarkdown p {
+          color: #e2e8f0;
+        }
+        .swagger-ui select {
+          color: #f7fafc;
+        }
+        .swagger-ui div, .swagger-ui span {
+          color: #e2e8f0;
+        }
+        .swagger-ui .markdown p, 
+        .swagger-ui .markdown pre, 
+        .swagger-ui .renderedMarkdown p, 
+        .swagger-ui .renderedMarkdown pre {
+          color: #e2e8f0;
+          margin: 0;
+        }
+        .swagger-ui .btn {
+          color: #f7fafc;
+        }
+        .swagger-ui .example {
+          color: #e2e8f0;
+        }
+        .swagger-ui textarea {
+          color: #e2e8f0;
         }
       `}</style>
       {children}
