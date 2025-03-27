@@ -102,14 +102,6 @@ const getTextStyles = (completedBy?: string, gameType?: Game['gameType'], player
   return 'text-gray-400';
 };
 
-const getPlayerLabelColor = (playerName: string, winner?: string, players?: string[]) => {
-  if (winner && playerName === winner) {
-    return winnerColor.highlight.replace('text-', '');
-  }
-  const colorIndex = getPlayerColorIndex(playerName, players);
-  return playerColors[colorIndex].highlight.replace('text-', '');
-};
-
 export default function QuestGrid({ quests, gameId, gameType, players, winner, onUpdate }: QuestGridProps) {
   const [editingQuest, setEditingQuest] = useState<string | null>(null);
   const [newQuestName, setNewQuestName] = useState('');
@@ -207,13 +199,9 @@ export default function QuestGrid({ quests, gameId, gameType, players, winner, o
                 <p className={`${getTextStyles(quest.completedBy, gameType, players, winner)} truncate`}>
                   By: {quest.completedByPlayer}
                 </p>
-                {gameType === 'Teams' ? (
+                {gameType === 'Teams' && (
                   <p className={quest.completedBy === 'Red' ? 'text-red-400' : 'text-blue-400'}>
                     Team: {quest.completedBy}
-                  </p>
-                ) : (
-                  <p className={`text-${getPlayerLabelColor(quest.completedBy, winner, players)}`}>
-                    Player: {quest.completedBy}
                   </p>
                 )}
               </div>
