@@ -10,7 +10,8 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:ci": "jest --ci",
-    "prebuild": "npm run test:ci"
+    "prebuild": "npm run test:ci",
+    "vercel-build": "npm install --legacy-peer-deps && next build"
   },
   "dependencies": {
     "@testing-library/dom": "^10.4.0",
