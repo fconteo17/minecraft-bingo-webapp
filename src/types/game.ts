@@ -24,6 +24,7 @@ export interface Game {
   completedQuests: {
     [key: string]: string[];
   };
+  ranked?: boolean;
 }
 
 export interface GameStartRequest {

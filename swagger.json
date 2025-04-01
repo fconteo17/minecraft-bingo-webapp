@@ -18,6 +18,10 @@
     {
       "name": "Games",
       "description": "Game management endpoints"
+    },
+    {
+      "name": "Rankings",
+      "description": "Player ranking endpoints"
     }
   ],
   "paths": {
@@ -355,7 +359,7 @@
       "post": {
         "tags": ["Games"],
         "summary": "End a game",
-        "description": "Ends a game and determines the winner",
+        "description": "Ends a game by determining the winner and optionally updating player ranks",
         "operationId": "endGame",
         "parameters": [
           {
@@ -369,13 +373,54 @@
             }
           }
         ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ranked": {
+                    "type": "boolean",
+                    "description": "Whether this is a ranked game that should update player MMR and rankings",
+                    "default": false
+                  },
+                  "playerUpdates": {
+                    "type": "array",
+                    "description": "Array of player MMR updates (required only for ranked games)",
+                    "items": {
+                      "$ref": "#/components/schemas/PlayerMMRUpdate"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "Game ended successfully",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Game"
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Game"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "ranked": {
+                          "type": "boolean",
+                          "description": "Whether this was a ranked game"
+                        },
+                        "rankingStatus": {
+                          "type": "string",
+                          "description": "Human-readable status of ranking updates"
+                        }
+                      }
+                    }
+                  ]
                 }
               }
             }
@@ -396,6 +441,39 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rankings": {
+      "get": {
+        "tags": ["Rankings"],
+        "summary": "Get player rankings",
+        "description": "Retrieves a list of all player rankings ordered by MMR (highest first)",
+        "operationId": "getPlayerRankings",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PlayerRank"
+                  }
                 }
               }
             }
@@ -467,11 +545,11 @@
             "format": "date-time",
             "description": "Timestamp when the quest was completed"
           }
-        }
+        },
+        "description": "A quest in the bingo game"
       },
       "Game": {
         "type": "object",
-        "required": ["id", "timestamp", "gameType", "quests", "completedQuests"],
         "properties": {
           "id": {
             "type": "string",
@@ -486,98 +564,49 @@
           "gameType": {
             "type": "string",
             "enum": ["Teams", "Solo"],
-            "description": "Type of game: Teams (Red vs Blue) or Solo (free-for-all)"
+            "description": "Type of game (team-based or free-for-all)"
           },
           "teams": {
             "type": "array",
+            "description": "Teams participating in the game (for team-based games)",
             "items": {
               "type": "string",
               "enum": ["Red", "Blue"]
             },
             "minItems": 2,
-            "maxItems": 2,
-            "description": "The two teams competing (only in Teams game type)"
+            "maxItems": 2
           },
           "players": {
             "type": "array",
+            "description": "Players participating in the game (for solo games)",
             "items": {
               "type": "string"
-            },
-            "minItems": 2,
-            "description": "Players competing in the game (only in Solo game type)"
+            }
           },
           "quests": {
             "type": "array",
+            "description": "List of quests in the game",
             "items": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "oneOf": [
-                    {
-                      "type": "string"
-                    },
-                    {
-                      "type": "object",
-                      "required": ["name"],
-                      "properties": {
-                        "name": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  ],
-                  "description": "Name of the quest"
-                },
-                "completedBy": {
-                  "oneOf": [
-                    {
-                      "type": "string",
-                      "enum": ["Red", "Blue"]
-                    },
-                    {
-                      "type": "string",
-                      "description": "Player name in solo games"
-                    }
-                  ],
-                  "description": "Team or player that completed the quest"
-                },
-                "completedByPlayer": {
-                  "type": "string",
-                  "description": "Name of the player who completed the quest"
-                },
-                "completedAt": {
-                  "type": "string",
-                  "format": "date-time",
-                  "description": "Timestamp when the quest was completed"
-                }
-              }
-            },
-            "minItems": 25,
-            "maxItems": 25,
-            "description": "List of quests in the game"
+              "$ref": "#/components/schemas/Quest"
+            }
           },
           "winner": {
-            "oneOf": [
-              {
-                "type": "string",
-                "enum": ["Red", "Blue"]
-              },
-              {
-                "type": "string",
-                "description": "Player name in solo games"
-              }
-            ],
-            "description": "Winner of the game (team or player)"
+            "type": "string",
+            "description": "Team or player that won the game"
           },
           "completedQuests": {
             "type": "object",
+            "description": "Map of completed quests by team/player",
             "additionalProperties": {
               "type": "array",
               "items": {
                 "type": "string"
               }
-            },
-            "description": "Map of completed quests by team or player"
+            }
+          },
+          "ranked": {
+            "type": "boolean",
+            "description": "Whether this was a ranked game"
           }
         }
       },
@@ -649,6 +678,56 @@
           "error": {
             "type": "string",
             "description": "Error message"
+          }
+        }
+      },
+      "PlayerMMRUpdate": {
+        "type": "object",
+        "required": ["playerId", "playerName", "mmr"],
+        "properties": {
+          "playerId": {
+            "type": "string",
+            "description": "Unique identifier for the player"
+          },
+          "playerName": {
+            "type": "string",
+            "description": "Display name of the player"
+          },
+          "mmr": {
+            "type": "integer",
+            "description": "New MMR value for the player"
+          }
+        }
+      },
+      "PlayerRank": {
+        "type": "object",
+        "properties": {
+          "playerId": {
+            "type": "string",
+            "description": "Unique identifier for the player"
+          },
+          "playerName": {
+            "type": "string",
+            "description": "Display name of the player"
+          },
+          "mmr": {
+            "type": "integer",
+            "description": "Match Making Rating (MMR) value"
+          },
+          "tier": {
+            "type": "string",
+            "enum": ["Potato", "Coal", "Copper", "Ferro", "Gold", "Diamond", "Emerald", "Netherite", "Dragon", "Nether Star"],
+            "description": "Rank tier based on MMR"
+          },
+          "division": {
+            "type": "string",
+            "enum": ["I", "II", "III", null],
+            "description": "Division within the tier (null for Potato and Nether Star)"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When the rank was last updated"
           }
         }
       }

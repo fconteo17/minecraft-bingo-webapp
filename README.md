@@ -122,6 +122,7 @@ The API supports:
 - Ending games
 - Retrieving game history
 
+
 ## 💻 Development
 
 - Run tests: `npm test`

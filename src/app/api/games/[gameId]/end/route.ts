@@ -46,14 +46,19 @@ export async function POST(
       );
     }
     
+    // Check if this is a ranked game
+    const isRanked = body.ranked === true;
+    console.log('[EndGame] Is ranked game:', isRanked);
+
+    // Player updates only required for ranked games
     const playerUpdates: PlayerMMRUpdate[] = body.playerUpdates || [];
     console.log('[EndGame] Player updates:', playerUpdates);
 
-    // Validate player updates
-    if (!Array.isArray(playerUpdates)) {
-      console.error('[EndGame] playerUpdates is not an array');
+    // Validate player updates for ranked games
+    if (isRanked && (!Array.isArray(playerUpdates) || playerUpdates.length === 0)) {
+      console.error('[EndGame] playerUpdates is required for ranked games');
       return NextResponse.json(
-        { error: 'playerUpdates must be an array' },
+        { error: 'playerUpdates array is required for ranked games' },
         { status: 400 }
       );
     }
@@ -101,35 +106,54 @@ export async function POST(
       );
     }
 
-    // Update player rankings
-    console.log('[EndGame] Starting player ranking updates');
-    for (const update of playerUpdates) {
-      try {
-        console.log('[EndGame] Calculating rank for player:', {
-          playerId: update.playerId,
-          playerName: update.playerName,
-          mmr: update.mmr
-        });
-        
-        const { tier, division } = calculateRank(update.mmr);
-        console.log('[EndGame] Calculated rank:', { tier, division });
-        
-        await updatePlayerRank(
-          update.playerId,
-          update.playerName,
-          update.mmr,
-          tier,
-          division
-        );
-        console.log('[EndGame] Successfully updated rank for player:', update.playerName);
-      } catch (rankUpdateError) {
-        console.error('[EndGame] Failed to update rank for player:', {
-          player: update.playerName,
-          error: rankUpdateError
-        });
-        throw rankUpdateError;
+    // Update player rankings only for ranked games
+    if (isRanked) {
+      console.log('[EndGame] Starting player ranking updates for ranked game');
+      
+      let successfulUpdates = 0;
+      let failedUpdates = 0;
+      
+      for (const update of playerUpdates) {
+        try {
+          console.log('[EndGame] Calculating rank for player:', {
+            playerId: update.playerId,
+            playerName: update.playerName,
+            mmr: update.mmr
+          });
+          
+          const { tier, division } = calculateRank(update.mmr);
+          console.log('[EndGame] Calculated rank:', { tier, division });
+          
+          await updatePlayerRank(
+            update.playerId,
+            update.playerName,
+            update.mmr,
+            tier,
+            division
+          );
+          console.log('[EndGame] Successfully updated rank for player:', update.playerName);
+          successfulUpdates++;
+        } catch (rankUpdateError) {
+          console.error('[EndGame] Failed to update rank for player:', {
+            player: update.playerName,
+            error: rankUpdateError
+          });
+          failedUpdates++;
+          // Continue with other updates instead of stopping the entire process
+        }
       }
+      
+      console.log('[EndGame] Ranking update summary:', {
+        total: playerUpdates.length,
+        successful: successfulUpdates,
+        failed: failedUpdates
+      });
+    } else {
+      console.log('[EndGame] Skipping player ranking updates for non-ranked game');
     }
+
+    // Record if the game was ranked in the game object
+    game.ranked = isRanked;
 
     // Save updated game state
     console.log('[EndGame] Saving final game state');
@@ -139,12 +163,20 @@ export async function POST(
       gameId,
       winner: game.winner,
       gameType: game.gameType,
+      ranked: isRanked,
       completedQuests: game.completedQuests,
       gameDuration: new Date().getTime() - new Date(game.timestamp).getTime(),
-      playerUpdates
+      playerUpdates: isRanked ? playerUpdates : 'not applicable'
     });
 
-    return NextResponse.json(game);
+    // Return with a clear message about ranking
+    return NextResponse.json({
+      ...game,
+      ranked: isRanked,
+      rankingStatus: isRanked 
+        ? `Rankings updated for ${playerUpdates.length} players` 
+        : 'Non-ranked game - rankings not updated'
+    });
   } catch (error) {
     console.error('[EndGame] Critical error:', error);
     return NextResponse.json(
