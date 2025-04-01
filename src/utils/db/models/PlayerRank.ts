@@ -7,7 +7,7 @@ let rankCollection: Collection<PlayerRank> | null = null;
 async function getRankCollection() {
   if (!rankCollection) {
     const client = await clientPromise;
-    const db = client.db();
+    const db = client.db('minecraft-bingo');
     rankCollection = db.collection<PlayerRank>('playerRanks');
     // Create unique index on playerId if it doesn't exist
     await rankCollection.createIndex({ playerId: 1 }, { unique: true });
@@ -55,7 +55,7 @@ export async function updatePlayerRank(
       );
 
       if (!updateResult.acknowledged) {
-        throw new Error('Failed to update existing player rank');
+        console.warn('[PlayerRank] Update not acknowledged:', { playerId, playerName });
       }
       
       // Return the updated player
@@ -81,7 +81,7 @@ export async function updatePlayerRank(
       
       const insertResult = await collection.insertOne(newPlayer);
       if (!insertResult.acknowledged) {
-        throw new Error('Failed to create player rank');
+        console.warn('[PlayerRank] Insert not acknowledged:', { playerId, playerName });
       }
       
       return newPlayer;
