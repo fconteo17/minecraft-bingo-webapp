@@ -28,6 +28,7 @@ export default function RootLayout({
               </h1>
               <nav>
                 <ul className="flex space-x-4">
+                  <li><Link href="/rankings" className="hover:text-blue-400">Rankings</Link></li>
                   <li><Link href="/api-docs" className="hover:text-blue-400">API Docs</Link></li>
                 </ul>
               </nav>

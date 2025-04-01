@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getGameById, updateGame } from '@/utils/gameStorage';
 import { Game } from '@/types/game';
+import { calculateRank } from '@/types/rank';
+import { updatePlayerRank } from '@/utils/db/models/PlayerRank';
 
 export const dynamic = 'force-dynamic';
 
@@ -10,16 +12,56 @@ type Context = {
   }>
 }
 
+type PlayerMMRUpdate = {
+  playerId: string;
+  playerName: string;
+  mmr: number;
+}
+
 export async function POST(
   request: NextRequest,
   context: Context
 ) {
   try {
+    console.log('[EndGame] Starting request processing');
+    
+    // Log request details
     const { gameId } = await context.params;
-    console.log('[EndGame] Request received:', { gameId });
+    console.log('[EndGame] GameId from params:', gameId);
+    
+    // Log request body
+    const requestBody = await request.text();
+    console.log('[EndGame] Raw request body:', requestBody);
+    
+    // Parse body
+    let body;
+    try {
+      body = JSON.parse(requestBody);
+      console.log('[EndGame] Parsed request body:', body);
+    } catch (parseError) {
+      console.error('[EndGame] Failed to parse request body:', parseError);
+      return NextResponse.json(
+        { error: 'Invalid JSON in request body' },
+        { status: 400 }
+      );
+    }
+    
+    const playerUpdates: PlayerMMRUpdate[] = body.playerUpdates || [];
+    console.log('[EndGame] Player updates:', playerUpdates);
+
+    // Validate player updates
+    if (!Array.isArray(playerUpdates)) {
+      console.error('[EndGame] playerUpdates is not an array');
+      return NextResponse.json(
+        { error: 'playerUpdates must be an array' },
+        { status: 400 }
+      );
+    }
 
     // Get current game state
+    console.log('[EndGame] Fetching game state for ID:', gameId);
     const game = await getGameById(gameId);
+    
     if (!game) {
       console.log('[EndGame] Game not found:', { gameId });
       return NextResponse.json(
@@ -27,35 +69,86 @@ export async function POST(
         { status: 404 }
       );
     }
+    
+    console.log('[EndGame] Current game state:', {
+      gameId,
+      gameType: game.gameType,
+      players: game.players,
+      teams: game.teams,
+      completedQuests: Object.keys(game.completedQuests).length
+    });
 
     // Handle different game types
-    if (game.gameType === 'Teams') {
-      handleTeamGame(game);
-    } else if (game.gameType === 'Solo') {
-      handleSoloGame(game);
-    } else {
-      console.error('[EndGame] Invalid game type:', { gameType: game.gameType });
+    try {
+      if (game.gameType === 'Teams') {
+        console.log('[EndGame] Processing team game');
+        handleTeamGame(game);
+      } else if (game.gameType === 'Solo') {
+        console.log('[EndGame] Processing solo game');
+        handleSoloGame(game);
+      } else {
+        console.error('[EndGame] Invalid game type:', { gameType: game.gameType });
+        return NextResponse.json(
+          { error: 'Invalid game type' },
+          { status: 400 }
+        );
+      }
+    } catch (gameHandlingError) {
+      console.error('[EndGame] Error handling game:', gameHandlingError);
       return NextResponse.json(
-        { error: 'Invalid game type' },
-        { status: 400 }
+        { error: 'Failed to process game' },
+        { status: 500 }
       );
     }
 
+    // Update player rankings
+    console.log('[EndGame] Starting player ranking updates');
+    for (const update of playerUpdates) {
+      try {
+        console.log('[EndGame] Calculating rank for player:', {
+          playerId: update.playerId,
+          playerName: update.playerName,
+          mmr: update.mmr
+        });
+        
+        const { tier, division } = calculateRank(update.mmr);
+        console.log('[EndGame] Calculated rank:', { tier, division });
+        
+        await updatePlayerRank(
+          update.playerId,
+          update.playerName,
+          update.mmr,
+          tier,
+          division
+        );
+        console.log('[EndGame] Successfully updated rank for player:', update.playerName);
+      } catch (rankUpdateError) {
+        console.error('[EndGame] Failed to update rank for player:', {
+          player: update.playerName,
+          error: rankUpdateError
+        });
+        throw rankUpdateError;
+      }
+    }
+
     // Save updated game state
+    console.log('[EndGame] Saving final game state');
     await updateGame(gameId, game);
+    
     console.log('[EndGame] Game ended successfully:', { 
       gameId,
       winner: game.winner,
       gameType: game.gameType,
       completedQuests: game.completedQuests,
-      gameDuration: new Date().getTime() - new Date(game.timestamp).getTime()
+      gameDuration: new Date().getTime() - new Date(game.timestamp).getTime(),
+      playerUpdates
     });
 
     return NextResponse.json(game);
   } catch (error) {
-    console.error('[EndGame] Error ending game:', error);
+    console.error('[EndGame] Critical error:', error);
     return NextResponse.json(
-      { error: 'Failed to end game' },
+      { error: 'Failed to end game', details: error instanceof Error ? error.message : 'Unknown error' },
       { status: 500 }
     );
   }
