@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
         );
       }
     } else if (body.gameType === 'Solo') {
-      if (!body.players || body.players.length < 2 || !body.quests || body.quests.length !== 25) {
+      if (!body.players || !body.quests || body.quests.length !== 25) {
         console.log('[CreateGame] Solo validation failed:', { 
           players: body.players, 
           playerCount: body.players?.length,
