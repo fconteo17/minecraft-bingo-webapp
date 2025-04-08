@@ -53,3 +53,5 @@ yarn-error.log*
 
 # Game data
 /data/games.json
+/qodana.sarif.json
+/qodana.yaml

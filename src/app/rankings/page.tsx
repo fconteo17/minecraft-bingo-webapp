@@ -24,7 +24,8 @@ export default function RankingsPage() {
             statusText: response.statusText,
             body: errorText,
           });
-          throw new Error(`Failed to fetch rankings: ${response.status} ${response.statusText}`);
+          setError(`Failed to fetch rankings: ${response.status} ${response.statusText}`);
+          return;
         }
 
         const data = await response.json();
@@ -43,7 +44,11 @@ export default function RankingsPage() {
       }
     };
 
-    fetchRankings();
+    fetchRankings().catch(error => {
+      console.error('[Rankings] Error in useEffect:', error);
+      setError(error instanceof Error ? error.message : 'An error occurred');
+      setLoading(false);
+    });
   }, []);
 
   const getRankColor = (tier: string) => {

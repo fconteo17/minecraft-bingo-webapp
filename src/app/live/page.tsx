@@ -36,8 +36,20 @@ export default function LivePage() {
       }
       setIsLoading(false);
     };
-    loadGames();
-    const interval = setInterval(loadGames, 5000);
+    
+    // Handle the initial load
+    loadGames().catch(error => {
+      console.error('Error loading games:', error);
+      setIsLoading(false);
+    });
+    
+    // Set up the interval
+    const interval = setInterval(() => {
+      loadGames().catch(error => {
+        console.error('Error loading games:', error);
+      });
+    }, 5000);
+    
     return () => clearInterval(interval);
   }, []);
 

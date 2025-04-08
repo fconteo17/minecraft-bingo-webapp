@@ -48,9 +48,20 @@ export default function HomePage() {
       }
       setIsLoading(false);
     };
-    loadGames();
-    // Set interval to refresh game data every 5 seconds.
-    const interval = setInterval(loadGames, 5000);
+    
+    // Handle the initial load
+    loadGames().catch(error => {
+      console.error('Error loading games:', error);
+      setIsLoading(false);
+    });
+    
+    // Set up the interval
+    const interval = setInterval(() => {
+      loadGames().catch(error => {
+        console.error('Error loading games:', error);
+      });
+    }, 5000);
+    
     return () => clearInterval(interval);
   }, []);
 
