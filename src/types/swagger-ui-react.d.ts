@@ -1,6 +1,6 @@
 declare module 'swagger-ui-react' {
   import React from 'react';
-  
+
   interface SwaggerUIProps {
     spec?: SwaggerSpec;
     url?: string;
@@ -21,7 +21,7 @@ declare module 'swagger-ui-react' {
     showExtensions?: boolean;
     syntaxHighlight?: object;
   }
-  
+
   // OpenAPI/Swagger specification interface
   interface SwaggerSpec {
     $ref?: string;
@@ -52,7 +52,7 @@ declare module 'swagger-ui-react' {
     }>;
     [key: string]: unknown; // Allow other OpenAPI properties
   }
-  
+
   interface PathItem {
     get?: OperationObject;
     put?: OperationObject;
@@ -64,7 +64,7 @@ declare module 'swagger-ui-react' {
     parameters?: Array<ParameterObject>;
     [key: string]: unknown;
   }
-  
+
   interface OperationObject {
     responses: Record<string, ResponseObject>;
     tags?: string[];
@@ -74,7 +74,7 @@ declare module 'swagger-ui-react' {
     requestBody?: RequestBodyObject;
     [key: string]: unknown;
   }
-  
+
   interface SchemaObject {
     type?: string;
     properties?: Record<string, SchemaObject>;
@@ -83,14 +83,14 @@ declare module 'swagger-ui-react' {
     $ref?: string;
     [key: string]: unknown;
   }
-  
+
   interface ResponseObject {
     description: string;
     content?: Record<string, { schema: SchemaObject }>;
     $ref?: string;
     [key: string]: unknown;
   }
-  
+
   interface ParameterObject {
     name: string;
     in: string;
@@ -100,7 +100,7 @@ declare module 'swagger-ui-react' {
     $ref?: string;
     [key: string]: unknown;
   }
-  
+
   interface RequestBodyObject {
     content: Record<string, { schema: SchemaObject }>;
     description?: string;
@@ -108,8 +108,8 @@ declare module 'swagger-ui-react' {
     $ref?: string;
     [key: string]: unknown;
   }
-  
+
   const SwaggerUI: React.FC<SwaggerUIProps>;
-  
+
   export default SwaggerUI;
-} 
+}

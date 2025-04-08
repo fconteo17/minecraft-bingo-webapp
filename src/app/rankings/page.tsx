@@ -16,13 +16,13 @@ export default function RankingsPage() {
         console.log('[Rankings] Making API request');
         const response = await fetch('/api/rankings');
         console.log('[Rankings] API response status:', response.status);
-        
+
         if (!response.ok) {
           const errorText = await response.text();
           console.error('[Rankings] API error:', {
             status: response.status,
             statusText: response.statusText,
-            body: errorText
+            body: errorText,
           });
           throw new Error(`Failed to fetch rankings: ${response.status} ${response.statusText}`);
         }
@@ -30,9 +30,9 @@ export default function RankingsPage() {
         const data = await response.json();
         console.log('[Rankings] Received rankings data:', {
           count: data.length,
-          sample: data.slice(0, 2) // Log first two rankings as sample
+          sample: data.slice(0, 2), // Log first two rankings as sample
         });
-        
+
         setRankings(data);
       } catch (err) {
         console.error('[Rankings] Error in fetchRankings:', err);
@@ -48,16 +48,16 @@ export default function RankingsPage() {
 
   const getRankColor = (tier: string) => {
     const colors: Record<string, string> = {
-      'Potato': 'text-yellow-700',
-      'Coal': 'text-gray-400',
-      'Copper': 'text-orange-400',
-      'Ferro': 'text-zinc-400',
-      'Gold': 'text-yellow-400',
-      'Diamond': 'text-blue-400',
-      'Emerald': 'text-green-400',
-      'Netherite': 'text-purple-400',
-      'Dragon': 'text-red-400',
-      'Nether Star': 'text-yellow-200'
+      Potato: 'text-yellow-700',
+      Coal: 'text-gray-400',
+      Copper: 'text-orange-400',
+      Ferro: 'text-zinc-400',
+      Gold: 'text-yellow-400',
+      Diamond: 'text-blue-400',
+      Emerald: 'text-green-400',
+      Netherite: 'text-purple-400',
+      Dragon: 'text-red-400',
+      'Nether Star': 'text-yellow-200',
     };
     return colors[tier] || 'text-white';
   };
@@ -86,24 +86,39 @@ export default function RankingsPage() {
     <div className="min-h-screen bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         <h1 className="text-3xl font-bold text-center mb-8 text-white">Player Rankings</h1>
-        
+
         <div className="bg-gray-800 shadow overflow-hidden sm:rounded-lg border border-gray-700">
           <table className="min-w-full divide-y divide-gray-700">
             <thead className="bg-gray-800">
               <tr>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider"
+                >
                   Rank
                 </th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider"
+                >
                   Player
                 </th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider"
+                >
                   MMR
                 </th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider"
+                >
                   Tier
                 </th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider"
+                >
                   Division
                 </th>
               </tr>
@@ -136,4 +151,4 @@ export default function RankingsPage() {
       </div>
     </div>
   );
-} 
+}

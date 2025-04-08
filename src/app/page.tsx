@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import { useEffect, useState } from 'react';
 import { Game } from '@/types/game';
 import GamePageClient from './games/[gameId]/GamePageClient';
@@ -69,7 +69,9 @@ export default function HomePage() {
 
   return (
     <main className="container mx-auto px-4 py-8">
-      <div className={`live-game-container ${isLiveGameVisible && liveGame ? 'live-game-visible' : 'live-game-hidden'}`}>
+      <div
+        className={`live-game-container ${isLiveGameVisible && liveGame ? 'live-game-visible' : 'live-game-hidden'}`}
+      >
         {isLiveGameVisible && liveGame && (
           <div className="fade-in">
             <GamePageClient game={liveGame} />

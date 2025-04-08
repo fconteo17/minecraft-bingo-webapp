@@ -40,4 +40,4 @@ export interface QuestCompletionRequest {
   teamName?: TeamName;
   playerName: string;
   questName: string;
-} 
+}

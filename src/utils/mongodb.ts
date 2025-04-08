@@ -7,10 +7,10 @@ if (!process.env.MONGODB_URI) {
 const uri = process.env.MONGODB_URI;
 const options = {
   connectTimeoutMS: 10000, // 10 seconds
-  socketTimeoutMS: 45000,  // 45 seconds
+  socketTimeoutMS: 45000, // 45 seconds
   maxPoolSize: 50,
   minPoolSize: 10,
-  retryWrites: true
+  retryWrites: true,
 };
 
 let client: MongoClient | undefined;
@@ -21,8 +21,8 @@ try {
     // In development mode, use a global variable so that the value
     // is preserved across module reloads caused by HMR (Hot Module Replacement).
     const globalWithMongo = global as typeof globalThis & {
-      _mongoClientPromise?: Promise<MongoClient>
-    }
+      _mongoClientPromise?: Promise<MongoClient>;
+    };
 
     if (!globalWithMongo._mongoClientPromise) {
       client = new MongoClient(uri, options);
@@ -39,4 +39,4 @@ try {
   throw new Error('MongoDB connection failed');
 }
 
-export default clientPromise; 
+export default clientPromise;

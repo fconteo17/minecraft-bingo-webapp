@@ -26,38 +26,38 @@ export async function getAllPlayerRanks(): Promise<PlayerRank[]> {
 }
 
 export async function updatePlayerRank(
-  playerId: string, 
+  playerId: string,
   playerName: string,
   mmr: number,
   tier: RankTier,
-  division: RankDivision | null
+  division: RankDivision | null,
 ): Promise<PlayerRank> {
   const collection = await getRankCollection();
-  
+
   try {
     // First check if player exists
     const existingPlayer = await collection.findOne({ playerId });
-    
+
     if (existingPlayer) {
       // Player exists, update them (without changing _id)
       console.log('[PlayerRank] Player exists, updating:', { playerId, playerName });
       const updateResult = await collection.updateOne(
         { playerId },
-        { 
-          $set: { 
+        {
+          $set: {
             playerName,
             mmr,
             tier,
             division,
-            updatedAt: new Date()
-          }
-        }
+            updatedAt: new Date(),
+          },
+        },
       );
 
       if (!updateResult.acknowledged) {
         console.warn('[PlayerRank] Update not acknowledged:', { playerId, playerName });
       }
-      
+
       // Return the updated player
       return {
         ...existingPlayer,
@@ -65,7 +65,7 @@ export async function updatePlayerRank(
         mmr,
         tier,
         division,
-        updatedAt: new Date()
+        updatedAt: new Date(),
       } as PlayerRank;
     } else {
       // New player, insert them
@@ -76,18 +76,18 @@ export async function updatePlayerRank(
         mmr,
         tier,
         division,
-        updatedAt: new Date()
+        updatedAt: new Date(),
       };
-      
+
       const insertResult = await collection.insertOne(newPlayer);
       if (!insertResult.acknowledged) {
         console.warn('[PlayerRank] Insert not acknowledged:', { playerId, playerName });
       }
-      
+
       return newPlayer;
     }
   } catch (error) {
     console.error('[PlayerRank] Error updating player rank:', error);
     throw error;
   }
-} 
+}

@@ -9,9 +9,6 @@ export async function GET() {
     return NextResponse.json(rankings);
   } catch (error) {
     console.error('[Rankings] Error fetching rankings:', error);
-    return NextResponse.json(
-      { error: 'Failed to fetch rankings' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: 'Failed to fetch rankings' }, { status: 500 });
   }
-} 
+}

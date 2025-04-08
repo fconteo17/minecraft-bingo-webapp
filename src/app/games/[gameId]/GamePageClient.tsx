@@ -29,32 +29,33 @@ export default function GamePageClient({ game: initialGame }: GamePageClientProp
   }, [game.id]);
 
   const handleQuestUpdate = (updatedQuests: Game['quests']) => {
-    setGame(prevGame => {
+    setGame((prevGame) => {
       // Create a new completed quests object based on game type
       const completedQuests: Record<string, string[]> = {};
-      
+
       if (prevGame.gameType === 'Teams' && prevGame.teams) {
         // For team games, initialize with team names
         completedQuests[prevGame.teams[0]] = [];
         completedQuests[prevGame.teams[1]] = [];
       } else if (prevGame.gameType === 'Solo' && prevGame.players) {
         // For solo games, initialize with player names
-        prevGame.players.forEach(player => {
+        prevGame.players.forEach((player) => {
           completedQuests[player] = [];
         });
       }
 
       // Populate completed quests
-      updatedQuests.forEach(quest => {
+      updatedQuests.forEach((quest) => {
         if (quest.completedBy) {
-          const questName = typeof quest.name === 'object' && quest.name !== null && 'name' in quest.name
-            ? (quest.name as { name: string }).name
-            : quest.name;
-          
+          const questName =
+            typeof quest.name === 'object' && quest.name !== null && 'name' in quest.name
+              ? (quest.name as { name: string }).name
+              : quest.name;
+
           if (!completedQuests[quest.completedBy]) {
             completedQuests[quest.completedBy] = [];
           }
-          
+
           completedQuests[quest.completedBy].push(questName);
         }
       });
@@ -62,7 +63,7 @@ export default function GamePageClient({ game: initialGame }: GamePageClientProp
       return {
         ...prevGame,
         quests: updatedQuests,
-        completedQuests
+        completedQuests,
       };
     });
   };
@@ -70,8 +71,8 @@ export default function GamePageClient({ game: initialGame }: GamePageClientProp
   return (
     <main className="container mx-auto px-4 py-8">
       <GameInfo game={game} />
-      <QuestGrid 
-        quests={game.quests} 
+      <QuestGrid
+        quests={game.quests}
         gameId={game.id}
         gameType={game.gameType}
         players={game.players}
@@ -80,4 +81,4 @@ export default function GamePageClient({ game: initialGame }: GamePageClientProp
       />
     </main>
   );
-} 
+}

@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import { useEffect, useState } from 'react';
 import { Game } from '@/types/game';
 import GameInfo from '@/components/GameInfo';
@@ -59,4 +59,4 @@ export default function LivePage() {
       )}
     </main>
   );
-} 
+}

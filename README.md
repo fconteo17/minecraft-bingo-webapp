@@ -37,12 +37,14 @@ A real-time multiplayer web application for playing Minecraft Bingo matches. Tea
 ## 🛠️ Getting Started
 
 1. Clone the repository:
+
 ```bash
 git clone <repository-url>
 cd minecraft-bingo
 ```
 
 2. Install dependencies:
+
 ```bash
 npm install
 # or
@@ -60,6 +62,7 @@ MONGODB_URI=mongodb+srv://<username>:<password>@<cluster-url>/<database>?retryWr
 ```
 
 4. Run the development server:
+
 ```bash
 npm run dev
 # or
@@ -80,6 +83,7 @@ yarn dev
 ## 🎮 Game Rules
 
 ### Team Mode
+
 1. Two teams compete: Red and Blue
 2. Each game has 25 Minecraft-related quests
 3. Teams race to complete quests first
@@ -88,6 +92,7 @@ yarn dev
    - First to complete their last quest (in case of a tie)
 
 ### Solo Mode
+
 1. Multiple players compete in a free-for-all format
 2. Each game has 25 Minecraft-related quests
 3. Players race to complete quests first
@@ -115,13 +120,13 @@ The application includes full API documentation using Swagger/OpenAPI 3.0.0. You
 - Production: [https://minecraft-bingo-webapp.vercel.app/api-docs](https://minecraft-bingo-webapp.vercel.app/api-docs)
 
 The API supports:
+
 - Creating new games (Teams or Solo mode)
 - Retrieving game details
 - Completing quests
 - Updating quest information
 - Ending games
 - Retrieving game history
-
 
 ## 💻 Development
 
@@ -154,11 +159,13 @@ This project is configured for easy deployment with Vercel:
 4. Deploy!
 
 Vercel will automatically:
+
 - Deploy when you push to main
 - Create preview deployments for pull requests
 - Handle HTTPS and domain configuration
 
 To deploy manually:
+
 ```bash
 npm run build
 npm run start

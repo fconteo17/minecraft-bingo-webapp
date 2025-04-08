@@ -3,7 +3,7 @@ import GamePageClient from './GamePageClient';
 
 async function getGame(gameId: string): Promise<Game> {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/games/${gameId}`, {
-    cache: 'no-store'
+    cache: 'no-store',
   });
   if (!res.ok) {
     throw new Error('Failed to fetch game');
@@ -29,4 +29,4 @@ export default async function GamePage({ params }: Props) {
   const { gameId } = await params;
   const game = await getGame(gameId);
   return <GamePageClient game={game} />;
-} 
+}

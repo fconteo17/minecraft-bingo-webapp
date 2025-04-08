@@ -7,9 +7,6 @@ export async function GET() {
     return NextResponse.json({ game });
   } catch (error) {
     console.error('Error fetching live game:', error);
-    return NextResponse.json(
-      { error: 'Failed to fetch live game' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: 'Failed to fetch live game' }, { status: 500 });
   }
-} 
+}

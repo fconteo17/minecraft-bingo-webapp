@@ -18,10 +18,7 @@ export const updateGame = async (gameId: string, game: Game): Promise<void> => {
   try {
     const client = await clientPromise;
     const db = client.db('minecraft-bingo');
-    await db.collection('games').updateOne(
-      { id: gameId },
-      { $set: game }
-    );
+    await db.collection('games').updateOne({ id: gameId }, { $set: game });
   } catch (error) {
     console.error('Error updating game:', error);
     throw new Error('Failed to update game');
@@ -43,10 +40,7 @@ export const getGames = async (): Promise<Game[]> => {
   try {
     const client = await clientPromise;
     const db = client.db('minecraft-bingo');
-    return db.collection('games')
-      .find<Game>({})
-      .sort({ timestamp: -1 })
-      .toArray();
+    return db.collection('games').find<Game>({}).sort({ timestamp: -1 }).toArray();
   } catch (error) {
     console.error('Error retrieving games:', error);
     throw new Error('Failed to retrieve games');
@@ -57,34 +51,38 @@ export const getLiveGame = async (): Promise<Game | null> => {
   try {
     const client = await clientPromise;
     const db = client.db('minecraft-bingo');
-    return db.collection('games')
-      .findOne<Game>({ winner: { $exists: false } });
+    return db.collection('games').findOne<Game>({ winner: { $exists: false } });
   } catch (error) {
     console.error('Error retrieving live game:', error);
     throw new Error('Failed to retrieve live game');
   }
 };
 
-export const getGameState = async (): Promise<{ liveGame: Game | null, completedGames: Game[], totalGames: number }> => {
+export const getGameState = async (): Promise<{
+  liveGame: Game | null;
+  completedGames: Game[];
+  totalGames: number;
+}> => {
   try {
     const client = await clientPromise;
     const db = client.db('minecraft-bingo');
     const [liveGame, completedGames, totalGames] = await Promise.all([
       db.collection('games').findOne<Game>({ winner: { $exists: false } }),
-      db.collection('games')
+      db
+        .collection('games')
         .find<Game>({ winner: { $exists: true } })
         .sort({ timestamp: -1 })
         .toArray(),
-      db.collection('games').countDocuments()
+      db.collection('games').countDocuments(),
     ]);
 
     return {
       liveGame,
       completedGames,
-      totalGames
+      totalGames,
     };
   } catch (error) {
     console.error('Error retrieving game state:', error);
     throw new Error('Failed to retrieve game state');
   }
-}; 
+};

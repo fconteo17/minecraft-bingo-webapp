@@ -2,11 +2,7 @@
 
 import React from 'react';
 
-export default function ApiDocsLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function ApiDocsLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="api-docs-wrapper">
       <style jsx global>{`
@@ -15,7 +11,7 @@ export default function ApiDocsLayout({
           color: #e2e8f0;
           font-family: 'Inter', sans-serif;
         }
-        
+
         /* Fix for the white header */
         .swagger-ui .topbar {
           background-color: #1a202c;
@@ -24,7 +20,7 @@ export default function ApiDocsLayout({
         .swagger-ui .topbar .download-url-wrapper .select-label {
           color: #e2e8f0;
         }
-        .swagger-ui .topbar .download-url-wrapper input[type=text] {
+        .swagger-ui .topbar .download-url-wrapper input[type='text'] {
           background: #2d3748;
           color: #e2e8f0;
           border: 1px solid #4a5568;
@@ -60,7 +56,7 @@ export default function ApiDocsLayout({
           background-color: #2d3748;
           color: #e2e8f0;
         }
-        
+
         /* Top header and info section */
         .swagger-ui .info {
           margin: 20px 0;
@@ -83,7 +79,9 @@ export default function ApiDocsLayout({
           color: white;
           font-family: 'Inter', sans-serif;
         }
-        .swagger-ui .info li, .swagger-ui .info p, .swagger-ui .info table {
+        .swagger-ui .info li,
+        .swagger-ui .info p,
+        .swagger-ui .info table {
           color: #e2e8f0;
         }
         .swagger-ui .info a {
@@ -92,7 +90,7 @@ export default function ApiDocsLayout({
         .swagger-ui .info a:hover {
           color: #63b3ed;
         }
-        
+
         /* Main sections and tags */
         .swagger-ui .opblock-tag {
           color: #f0f0f0;
@@ -103,13 +101,13 @@ export default function ApiDocsLayout({
           background-color: #2d3748;
           transition: all 0.3s;
         }
-        
+
         /* Endpoint blocks */
         .swagger-ui .opblock {
           background: #2d3748;
           border-radius: 6px;
           border: 1px solid #4a5568;
-          box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
           margin-bottom: 16px;
         }
         .swagger-ui .opblock .opblock-summary {
@@ -137,7 +135,7 @@ export default function ApiDocsLayout({
         .swagger-ui .opblock .opblock-summary-description {
           color: #cbd5e0;
         }
-        
+
         /* Tables */
         .swagger-ui table {
           background-color: #2d3748;
@@ -154,7 +152,7 @@ export default function ApiDocsLayout({
           color: #e2e8f0;
           border-color: #4a5568;
         }
-        
+
         /* Models */
         .swagger-ui section.models {
           border-color: #4a5568;
@@ -173,9 +171,10 @@ export default function ApiDocsLayout({
           color: #e2e8f0;
         }
         .swagger-ui .model-toggle:after {
-          background: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23e2e8f0' d='M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z'/%3E%3C/svg%3E") 50% no-repeat;
+          background: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23e2e8f0' d='M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z'/%3E%3C/svg%3E")
+            50% no-repeat;
         }
-        
+
         /* Parameters */
         .swagger-ui .parameter__name {
           color: #e2e8f0;
@@ -190,7 +189,7 @@ export default function ApiDocsLayout({
         .swagger-ui .parameter__deprecated {
           color: #e53e3e;
         }
-        
+
         /* Schema */
         .swagger-ui .prop-format {
           color: #cbd5e0;
@@ -198,12 +197,12 @@ export default function ApiDocsLayout({
         .swagger-ui .prop-type {
           color: #4fd1c5;
         }
-        
+
         /* Inputs and buttons */
-        .swagger-ui input[type=text],
-        .swagger-ui input[type=password],
-        .swagger-ui input[type=search],
-        .swagger-ui input[type=email],
+        .swagger-ui input[type='text'],
+        .swagger-ui input[type='password'],
+        .swagger-ui input[type='search'],
+        .swagger-ui input[type='email'],
         .swagger-ui textarea {
           background-color: #1a202c;
           color: #e2e8f0;
@@ -211,10 +210,10 @@ export default function ApiDocsLayout({
           padding: 8px;
           border-radius: 4px;
         }
-        .swagger-ui input[type=text]:focus,
-        .swagger-ui input[type=password]:focus,
-        .swagger-ui input[type=search]:focus,
-        .swagger-ui input[type=email]:focus,
+        .swagger-ui input[type='text']:focus,
+        .swagger-ui input[type='password']:focus,
+        .swagger-ui input[type='search']:focus,
+        .swagger-ui input[type='email']:focus,
         .swagger-ui textarea:focus {
           border-color: #4299e1;
         }
@@ -237,13 +236,13 @@ export default function ApiDocsLayout({
           color: white;
           border-color: #2f855a;
         }
-        
+
         /* Schema properties */
         .swagger-ui .json-schema-form-item {
           background-color: #2d3748;
           color: #e2e8f0;
         }
-        
+
         /* Response section */
         .swagger-ui .responses-table .response {
           color: #e2e8f0;
@@ -254,12 +253,12 @@ export default function ApiDocsLayout({
         .swagger-ui .response-col_description__inner div {
           margin-bottom: 8px;
         }
-        
+
         /* Fix for hydration */
         body {
           overflow-y: auto;
         }
-        
+
         /* Fix code block coloring */
         .swagger-ui .microlight {
           color: #e2e8f0;
@@ -268,7 +267,7 @@ export default function ApiDocsLayout({
           padding: 8px;
           border-radius: 4px;
         }
-        
+
         /* Fix for OpenAPI badges */
         .swagger-ui .info .title small.version-stamp,
         .swagger-ui .info .title small:not(.version-stamp) {
@@ -278,7 +277,7 @@ export default function ApiDocsLayout({
         .swagger-ui .info .title small.version-stamp {
           background-color: #38a169 !important;
         }
-        
+
         /* Request body and schema text */
         .swagger-ui .opblock-section-header > label {
           color: #f7fafc;
@@ -287,8 +286,8 @@ export default function ApiDocsLayout({
           color: #f7fafc;
         }
         .swagger-ui .table-container .opblock-description-wrapper p,
-        .swagger-ui .opblock-description-wrapper p, 
-        .swagger-ui .opblock-external-docs-wrapper p, 
+        .swagger-ui .opblock-description-wrapper p,
+        .swagger-ui .opblock-external-docs-wrapper p,
         .swagger-ui .opblock-title_normal p {
           color: #e2e8f0;
         }
@@ -298,7 +297,7 @@ export default function ApiDocsLayout({
         .swagger-ui section.models .model-container {
           background-color: #2d3748;
         }
-        .swagger-ui .model-box-control:focus, 
+        .swagger-ui .model-box-control:focus,
         .swagger-ui .models-control:focus {
           outline: none;
         }
@@ -311,12 +310,13 @@ export default function ApiDocsLayout({
         .swagger-ui select {
           color: #f7fafc;
         }
-        .swagger-ui div, .swagger-ui span {
+        .swagger-ui div,
+        .swagger-ui span {
           color: #e2e8f0;
         }
-        .swagger-ui .markdown p, 
-        .swagger-ui .markdown pre, 
-        .swagger-ui .renderedMarkdown p, 
+        .swagger-ui .markdown p,
+        .swagger-ui .markdown pre,
+        .swagger-ui .renderedMarkdown p,
         .swagger-ui .renderedMarkdown pre {
           color: #e2e8f0;
           margin: 0;
@@ -334,4 +334,4 @@ export default function ApiDocsLayout({
       {children}
     </div>
   );
-} 
+}

@@ -716,7 +716,18 @@
           },
           "tier": {
             "type": "string",
-            "enum": ["Potato", "Coal", "Copper", "Ferro", "Gold", "Diamond", "Emerald", "Netherite", "Dragon", "Nether Star"],
+            "enum": [
+              "Potato",
+              "Coal",
+              "Copper",
+              "Ferro",
+              "Gold",
+              "Diamond",
+              "Emerald",
+              "Netherite",
+              "Dragon",
+              "Nether Star"
+            ],
             "description": "Rank tier based on MMR"
           },
           "division": {
@@ -733,4 +744,4 @@
       }
     }
   }
-} 
+}
