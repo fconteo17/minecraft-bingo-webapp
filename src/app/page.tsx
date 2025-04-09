@@ -89,6 +89,7 @@ export default function HomePage() {
           </div>
         )}
       </div>
+      
       <div className="fade-in">
         <h2 className="text-2xl font-bold text-gray-100 mt-8">Game History</h2>
         {gameHistory.map((game) => (

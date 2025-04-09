@@ -33,6 +33,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     </Link>
                   </li>
                   <li>
+                    <Link href="/wiki" className="hover:text-blue-400">
+                      Wiki
+                    </Link>
+                  </li>
+                  <li>
                     <Link href="/api-docs" className="hover:text-blue-400">
                       API Docs
                     </Link>
