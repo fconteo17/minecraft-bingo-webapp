@@ -48,20 +48,20 @@ export default function HomePage() {
       }
       setIsLoading(false);
     };
-    
+
     // Handle the initial load
-    loadGames().catch(error => {
+    loadGames().catch((error) => {
       console.error('Error loading games:', error);
       setIsLoading(false);
     });
-    
+
     // Set up the interval
     const interval = setInterval(() => {
-      loadGames().catch(error => {
+      loadGames().catch((error) => {
         console.error('Error loading games:', error);
       });
     }, 5000);
-    
+
     return () => clearInterval(interval);
   }, []);
 
@@ -89,7 +89,7 @@ export default function HomePage() {
           </div>
         )}
       </div>
-      
+
       <div className="fade-in">
         <h2 className="text-2xl font-bold text-gray-100 mt-8">Game History</h2>
         {gameHistory.map((game) => (

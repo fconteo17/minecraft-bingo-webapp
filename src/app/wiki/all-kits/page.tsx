@@ -6,7 +6,7 @@ export default function AllKitsPage() {
     <main className="container mx-auto px-4 py-8 pb-20">
       <div className="prose prose-invert max-w-none">
         <h1 className="text-4xl font-bold text-center mb-8">All Bingo Kits</h1>
-        
+
         <div className="bg-gray-800 p-4 rounded-lg mb-8">
           <p className="text-center">
             Complete information about all 20 kits available in the Minecraft Bingo plugin
@@ -25,13 +25,22 @@ export default function AllKitsPage() {
           {/* Hunter */}
           <div id="hunter" className="bg-gray-800 p-4 rounded-lg">
             <h2 className="text-2xl font-semibold text-blue-300">🧭 Hunter</h2>
-            <p><strong>Icon</strong>: Compass</p>
-            <p><strong>Description</strong>: Use a compass to track down enemies!</p>
+            <p>
+              <strong>Icon</strong>: Compass
+            </p>
+            <p>
+              <strong>Description</strong>: Use a compass to track down enemies!
+            </p>
             <div className="mt-2">
               <p className="font-semibold">Kit Contents:</p>
               <ul className="list-disc pl-6">
-                <li><strong>Start</strong>: Iron Sword with Sharpness II</li>
-                <li><strong>Complete</strong>: Hunter&apos;s Compass that tracks the nearest enemy player, Iron Sword upgraded to Sharpness V</li>
+                <li>
+                  <strong>Start</strong>: Iron Sword with Sharpness II
+                </li>
+                <li>
+                  <strong>Complete</strong>: Hunter&apos;s Compass that tracks the nearest enemy
+                  player, Iron Sword upgraded to Sharpness V
+                </li>
               </ul>
             </div>
             <div className="mt-2">
@@ -47,8 +56,13 @@ export default function AllKitsPage() {
           {/* Aquaman */}
           <div id="aquaman" className="bg-gray-800 p-4 rounded-lg">
             <h2 className="text-2xl font-semibold text-blue-300">🐢 Aquaman</h2>
-            <p><strong>Icon</strong>: Turtle Helmet</p>
-            <p><strong>Description</strong>: Breathe underwater, swim faster, and break blocks quickly underwater!</p>
+            <p>
+              <strong>Icon</strong>: Turtle Helmet
+            </p>
+            <p>
+              <strong>Description</strong>: Breathe underwater, swim faster, and break blocks
+              quickly underwater!
+            </p>
             <div className="mt-2">
               <p className="font-semibold">Kit Contents:</p>
               <ul className="list-disc pl-6">
@@ -69,8 +83,12 @@ export default function AllKitsPage() {
           {/* Miner */}
           <div id="miner" className="bg-gray-800 p-4 rounded-lg">
             <h2 className="text-2xl font-semibold text-blue-300">⛏️ Miner</h2>
-            <p><strong>Icon</strong>: Iron Pickaxe</p>
-            <p><strong>Description</strong>: Break blocks and escape caves quickly!</p>
+            <p>
+              <strong>Icon</strong>: Iron Pickaxe
+            </p>
+            <p>
+              <strong>Description</strong>: Break blocks and escape caves quickly!
+            </p>
             <div className="mt-2">
               <p className="font-semibold">Kit Contents:</p>
               <ul className="list-disc pl-6">
@@ -91,8 +109,13 @@ export default function AllKitsPage() {
           {/* Survivor */}
           <div id="survivor" className="bg-gray-800 p-4 rounded-lg">
             <h2 className="text-2xl font-semibold text-blue-300">🍎 Survivor</h2>
-            <p><strong>Icon</strong>: Golden Apple</p>
-            <p><strong>Description</strong>: Protect yourself with armor and eat golden apples to survive!</p>
+            <p>
+              <strong>Icon</strong>: Golden Apple
+            </p>
+            <p>
+              <strong>Description</strong>: Protect yourself with armor and eat golden apples to
+              survive!
+            </p>
             <div className="mt-2">
               <p className="font-semibold">Kit Contents:</p>
               <ul className="list-disc pl-6">
@@ -113,8 +136,12 @@ export default function AllKitsPage() {
           {/* Beastmaster */}
           <div id="beastmaster" className="bg-gray-800 p-4 rounded-lg">
             <h2 className="text-2xl font-semibold text-blue-300">🐔 Beastmaster</h2>
-            <p><strong>Icon</strong>: Chicken Spawn Egg</p>
-            <p><strong>Description</strong>: Use spawn eggs to summon animals!</p>
+            <p>
+              <strong>Icon</strong>: Chicken Spawn Egg
+            </p>
+            <p>
+              <strong>Description</strong>: Use spawn eggs to summon animals!
+            </p>
             <div className="mt-2">
               <p className="font-semibold">Kit Contents:</p>
               <ul className="list-disc pl-6">
@@ -133,8 +160,12 @@ export default function AllKitsPage() {
           {/* Endermage */}
           <div id="endermage" className="bg-gray-800 p-4 rounded-lg">
             <h2 className="text-2xl font-semibold text-blue-300">👁️ Endermage</h2>
-            <p><strong>Icon</strong>: Ender Eye</p>
-            <p><strong>Description</strong>: Use your ender eyes and ender pearl to find the End!</p>
+            <p>
+              <strong>Icon</strong>: Ender Eye
+            </p>
+            <p>
+              <strong>Description</strong>: Use your ender eyes and ender pearl to find the End!
+            </p>
             <div className="mt-2">
               <p className="font-semibold">Kit Contents:</p>
               <ul className="list-disc pl-6">
@@ -154,8 +185,12 @@ export default function AllKitsPage() {
           {/* Raider */}
           <div id="raider" className="bg-gray-800 p-4 rounded-lg">
             <h2 className="text-2xl font-semibold text-blue-300">💎 Raider</h2>
-            <p><strong>Icon</strong>: Emerald</p>
-            <p><strong>Description</strong>: Automatically start raids when entering villages!</p>
+            <p>
+              <strong>Icon</strong>: Emerald
+            </p>
+            <p>
+              <strong>Description</strong>: Automatically start raids when entering villages!
+            </p>
             <div className="mt-2">
               <p className="font-semibold">Kit Contents:</p>
               <ul className="list-disc pl-6">
@@ -175,8 +210,12 @@ export default function AllKitsPage() {
           {/* Beekeeper */}
           <div id="beekeeper" className="bg-gray-800 p-4 rounded-lg">
             <h2 className="text-2xl font-semibold text-blue-300">🐝 Beekeeper</h2>
-            <p><strong>Icon</strong>: Bee Nest</p>
-            <p><strong>Description</strong>: Create your own apiary!</p>
+            <p>
+              <strong>Icon</strong>: Bee Nest
+            </p>
+            <p>
+              <strong>Description</strong>: Create your own apiary!
+            </p>
             <div className="mt-2">
               <p className="font-semibold">Kit Contents:</p>
               <ul className="list-disc pl-6">
@@ -196,8 +235,13 @@ export default function AllKitsPage() {
           {/* Nether Explorer */}
           <div id="nether-explorer" className="bg-gray-800 p-4 rounded-lg">
             <h2 className="text-2xl font-semibold text-blue-300">🔥 Nether Explorer</h2>
-            <p><strong>Icon</strong>: Netherrack</p>
-            <p><strong>Description</strong>: Create Nether portals and find Nether structures quickly!</p>
+            <p>
+              <strong>Icon</strong>: Netherrack
+            </p>
+            <p>
+              <strong>Description</strong>: Create Nether portals and find Nether structures
+              quickly!
+            </p>
             <div className="mt-2">
               <p className="font-semibold">Kit Contents:</p>
               <ul className="list-disc pl-6">
@@ -218,8 +262,12 @@ export default function AllKitsPage() {
           {/* Surprise */}
           <div id="surprise" className="bg-gray-800 p-4 rounded-lg">
             <h2 className="text-2xl font-semibold text-blue-300">❓ Surprise</h2>
-            <p><strong>Icon</strong>: Name Tag</p>
-            <p><strong>Description</strong>: Receive a random kit at the start of the match!</p>
+            <p>
+              <strong>Icon</strong>: Name Tag
+            </p>
+            <p>
+              <strong>Description</strong>: Receive a random kit at the start of the match!
+            </p>
             <div className="mt-2">
               <p className="font-semibold">Kit Contents:</p>
               <ul className="list-disc pl-6">
@@ -238,8 +286,12 @@ export default function AllKitsPage() {
           {/* Gambler */}
           <div id="gambler" className="bg-gray-800 p-4 rounded-lg">
             <h2 className="text-2xl font-semibold text-blue-300">🥇 Gambler</h2>
-            <p><strong>Icon</strong>: Gold Ingot</p>
-            <p><strong>Description</strong>: After 5 minutes, choose between 3 random kits!</p>
+            <p>
+              <strong>Icon</strong>: Gold Ingot
+            </p>
+            <p>
+              <strong>Description</strong>: After 5 minutes, choose between 3 random kits!
+            </p>
             <div className="mt-2">
               <p className="font-semibold">Kit Contents:</p>
               <ul className="list-disc pl-6">
@@ -259,8 +311,12 @@ export default function AllKitsPage() {
           {/* Necromancer */}
           <div id="necromancer" className="bg-gray-800 p-4 rounded-lg">
             <h2 className="text-2xl font-semibold text-blue-300">🔮 Necromancer</h2>
-            <p><strong>Icon</strong>: Netherite Hoe</p>
-            <p><strong>Description</strong>: Use your scythe to summon mobs on your enemies!</p>
+            <p>
+              <strong>Icon</strong>: Netherite Hoe
+            </p>
+            <p>
+              <strong>Description</strong>: Use your scythe to summon mobs on your enemies!
+            </p>
             <div className="mt-2">
               <p className="font-semibold">Kit Contents:</p>
               <ul className="list-disc pl-6">
@@ -280,8 +336,12 @@ export default function AllKitsPage() {
           {/* Fisherman */}
           <div id="fisherman" className="bg-gray-800 p-4 rounded-lg">
             <h2 className="text-2xl font-semibold text-blue-300">🎣 Fisherman</h2>
-            <p><strong>Icon</strong>: Fishing Rod</p>
-            <p><strong>Description</strong>: Fish quickly and collect water treasures!</p>
+            <p>
+              <strong>Icon</strong>: Fishing Rod
+            </p>
+            <p>
+              <strong>Description</strong>: Fish quickly and collect water treasures!
+            </p>
             <div className="mt-2">
               <p className="font-semibold">Kit Contents:</p>
               <ul className="list-disc pl-6">
@@ -302,8 +362,12 @@ export default function AllKitsPage() {
           {/* Pão (Support) */}
           <div id="pao" className="bg-gray-800 p-4 rounded-lg">
             <h2 className="text-2xl font-semibold text-blue-300">🍞 Pão (Support)</h2>
-            <p><strong>Icon</strong>: Bread</p>
-            <p><strong>Description</strong>: Help your team by feeding and healing them!</p>
+            <p>
+              <strong>Icon</strong>: Bread
+            </p>
+            <p>
+              <strong>Description</strong>: Help your team by feeding and healing them!
+            </p>
             <div className="mt-2">
               <p className="font-semibold">Kit Contents:</p>
               <ul className="list-disc pl-6">
@@ -324,8 +388,12 @@ export default function AllKitsPage() {
           {/* Scout */}
           <div id="scout" className="bg-gray-800 p-4 rounded-lg">
             <h2 className="text-2xl font-semibold text-blue-300">🪶 Scout</h2>
-            <p><strong>Icon</strong>: Feather</p>
-            <p><strong>Description</strong>: Use your boost to run fast!</p>
+            <p>
+              <strong>Icon</strong>: Feather
+            </p>
+            <p>
+              <strong>Description</strong>: Use your boost to run fast!
+            </p>
             <div className="mt-2">
               <p className="font-semibold">Kit Contents:</p>
               <ul className="list-disc pl-6">
@@ -346,8 +414,12 @@ export default function AllKitsPage() {
           {/* Checkpoint */}
           <div id="checkpoint" className="bg-gray-800 p-4 rounded-lg">
             <h2 className="text-2xl font-semibold text-blue-300">🚩 Checkpoint</h2>
-            <p><strong>Icon</strong>: Nether Brick Fence</p>
-            <p><strong>Description</strong>: Use your checkpoint to return to a specific location!</p>
+            <p>
+              <strong>Icon</strong>: Nether Brick Fence
+            </p>
+            <p>
+              <strong>Description</strong>: Use your checkpoint to return to a specific location!
+            </p>
             <div className="mt-2">
               <p className="font-semibold">Kit Contents:</p>
               <ul className="list-disc pl-6">
@@ -366,8 +438,12 @@ export default function AllKitsPage() {
           {/* Joker */}
           <div id="joker" className="bg-gray-800 p-4 rounded-lg">
             <h2 className="text-2xl font-semibold text-blue-300">🃏 Joker</h2>
-            <p><strong>Icon</strong>: Tropical Fish</p>
-            <p><strong>Description</strong>: Use your Joker to shuffle the inventory of your enemies!</p>
+            <p>
+              <strong>Icon</strong>: Tropical Fish
+            </p>
+            <p>
+              <strong>Description</strong>: Use your Joker to shuffle the inventory of your enemies!
+            </p>
             <div className="mt-2">
               <p className="font-semibold">Kit Contents:</p>
               <ul className="list-disc pl-6">
@@ -387,8 +463,12 @@ export default function AllKitsPage() {
           {/* Architect */}
           <div id="architect" className="bg-gray-800 p-4 rounded-lg">
             <h2 className="text-2xl font-semibold text-blue-300">🧱 Architect</h2>
-            <p><strong>Icon</strong>: Shulker Shell</p>
-            <p><strong>Description</strong>: Use your Builder to construct quickly!</p>
+            <p>
+              <strong>Icon</strong>: Shulker Shell
+            </p>
+            <p>
+              <strong>Description</strong>: Use your Builder to construct quickly!
+            </p>
             <div className="mt-2">
               <p className="font-semibold">Kit Contents:</p>
               <ul className="list-disc pl-6">
@@ -409,8 +489,12 @@ export default function AllKitsPage() {
           {/* Sedex */}
           <div id="sedex" className="bg-gray-800 p-4 rounded-lg">
             <h2 className="text-2xl font-semibold text-blue-300">📦 Sedex</h2>
-            <p><strong>Icon</strong>: Chest</p>
-            <p><strong>Description</strong>: Use your Sedex to get items from your allies!</p>
+            <p>
+              <strong>Icon</strong>: Chest
+            </p>
+            <p>
+              <strong>Description</strong>: Use your Sedex to get items from your allies!
+            </p>
             <div className="mt-2">
               <p className="font-semibold">Kit Contents:</p>
               <ul className="list-disc pl-6">
@@ -430,8 +514,12 @@ export default function AllKitsPage() {
           {/* Cultivator */}
           <div id="cultivator" className="bg-gray-800 p-4 rounded-lg">
             <h2 className="text-2xl font-semibold text-blue-300">🌱 Cultivator</h2>
-            <p><strong>Icon</strong>: Wheat</p>
-            <p><strong>Description</strong>: Hold your hoe to make plants grow quickly!</p>
+            <p>
+              <strong>Icon</strong>: Wheat
+            </p>
+            <p>
+              <strong>Description</strong>: Hold your hoe to make plants grow quickly!
+            </p>
             <div className="mt-2">
               <p className="font-semibold">Kit Contents:</p>
               <ul className="list-disc pl-6">
@@ -458,4 +546,4 @@ export default function AllKitsPage() {
       </div>
     </main>
   );
-} 
+}

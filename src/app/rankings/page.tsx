@@ -44,7 +44,7 @@ export default function RankingsPage() {
       }
     };
 
-    fetchRankings().catch(error => {
+    fetchRankings().catch((error) => {
       console.error('[Rankings] Error in useEffect:', error);
       setError(error instanceof Error ? error.message : 'An error occurred');
       setLoading(false);
