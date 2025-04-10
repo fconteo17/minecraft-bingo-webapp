@@ -75,7 +75,17 @@ export default function HomePage() {
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+        <div className="relative w-16 h-16">
+          <div className="absolute top-0 left-0 w-full h-full border-4 border-blue-500/20 rounded-full"></div>
+          <div className="absolute top-0 left-0 w-full h-full border-4 border-transparent border-t-blue-500 rounded-full animate-spin"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-blue-500">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+              <path d="M8 13A5 5 0 1 1 8 3a5 5 0 0 1 0 10zm0 1A6 6 0 1 0 8 2a6 6 0 0 0 0 12z"/>
+              <path d="M8 11A3 3 0 1 1 8 5a3 3 0 0 1 0 6zm0 1A4 4 0 1 0 8 4a4 4 0 0 0 0 8z"/>
+            </svg>
+          </div>
+        </div>
       </div>
     );
   }
@@ -85,7 +95,7 @@ export default function HomePage() {
       {/* Hero section - only show when no live game */}
       {!isLiveGameVisible && (
         <div className="mb-16 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 gradient-text">
+          <h1 className="text-4xl md:text-5xl font-bold mb-6 gradient-text pb-1">
             Minecraft Bingo
           </h1>
           <p className="text-xl text-blue-200 max-w-3xl mx-auto">

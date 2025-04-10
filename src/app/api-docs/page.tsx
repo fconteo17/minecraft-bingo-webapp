@@ -6,8 +6,8 @@ import dynamic from 'next/dynamic';
 // Import Swagger UI CSS
 import 'swagger-ui-react/swagger-ui.css';
 
-// Create a custom wrapper component for Swagger UI
-const SwaggerUIWrapper = dynamic(() => import('swagger-ui-react'), { 
+// Dynamically import SwaggerUI with SSR disabled
+const SwaggerUI = dynamic(() => import('swagger-ui-react'), { 
   ssr: false,
   loading: () => <div className="text-center text-blue-200 p-4">Loading API documentation...</div>
 });
@@ -20,13 +20,24 @@ function SwaggerUIContainer() {
     // Suppress React strict mode warnings for Swagger UI
     const originalConsoleError = console.error;
     console.error = (...args) => {
+      const message = args[0];
+      
+      // Filter out specific warnings from the Swagger UI component
       if (
-        typeof args[0] === 'string' && 
-        args[0].includes('UNSAFE_componentWillReceiveProps') &&
-        args[0].includes('OperationContainer')
+        typeof message === 'string' && 
+        (message.includes('componentWillReceiveProps') || 
+         message.includes('componentWillMount') ||
+         message.includes('UNSAFE_')) &&
+        args.some(arg => 
+          typeof arg === 'object' && 
+          arg !== null && 
+          arg.toString && 
+          arg.toString().includes('OperationContainer')
+        )
       ) {
         return;
       }
+      
       originalConsoleError(...args);
     };
 
@@ -37,13 +48,22 @@ function SwaggerUIContainer() {
     style.innerHTML = `
       .swagger-ui { visibility: visible; }
       .swagger-ui .opblock { margin-bottom: 15px; }
+      .swagger-ui .opblock-tag { font-size: 1.2rem; padding: 10px 0; }
+      .swagger-ui .opblock-summary { padding: 8px; }
+      .swagger-ui .opblock-body { padding: 15px; }
+      .swagger-ui .model-box { padding: 10px; }
+      .swagger-ui .errors-wrapper { margin: 0; padding: 10px; }
+      .swagger-ui { font-family: var(--font-sans); }
     `;
     document.head.appendChild(style);
     
     return () => {
       // Restore original console.error
       console.error = originalConsoleError;
-      document.head.removeChild(style);
+      // Clean up style
+      if (document.head.contains(style)) {
+        document.head.removeChild(style);
+      }
     };
   }, []);
 
@@ -52,7 +72,7 @@ function SwaggerUIContainer() {
   }
 
   return (
-    <SwaggerUIWrapper
+    <SwaggerUI
       url="/api/docs"
       docExpansion="list"
       defaultModelsExpandDepth={-1}
@@ -83,7 +103,7 @@ export default function ApiDocs() {
         </div>
       </div>
       
-      <div id="swagger-ui" className="swagger-ui">
+      <div id="swagger-ui" className="swagger-ui glass-container p-4">
         <SwaggerUIContainer />
       </div>
     </div>

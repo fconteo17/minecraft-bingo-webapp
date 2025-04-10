@@ -513,50 +513,50 @@ export default function WikiPage() {
           <SectionHeading id="commands" title="🔧 Plugin Commands" />
           {(activeSection === 'commands' || activeSection === null) && (
             <div className="mt-4">
-              <div className="bg-gray-800 p-4 rounded-lg overflow-x-auto">
+              <div className="glass-container p-4 overflow-x-auto border border-blue-800">
                 <table className="min-w-full">
                   <thead>
                     <tr>
-                      <th className="text-left py-2 px-4 border-b border-gray-700">Command</th>
-                      <th className="text-left py-2 px-4 border-b border-gray-700">Description</th>
+                      <th className="text-left py-2 px-4 border-b border-blue-800/50 text-blue-300 font-semibold">Command</th>
+                      <th className="text-left py-2 px-4 border-b border-blue-800/50 text-blue-300 font-semibold">Description</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
-                      <td className="py-2 px-4 border-b border-gray-700">
-                        <code>/bingo</code>
+                      <td className="py-3 px-4 border-b border-blue-900/30">
+                        <code className="bg-gradient-to-r from-blue-900/40 to-indigo-900/40 px-3 py-1 rounded-md border border-blue-800/50 text-blue-200">/bingo</code>
                       </td>
-                      <td className="py-2 px-4 border-b border-gray-700">Main plugin command</td>
+                      <td className="py-3 px-4 border-b border-blue-900/30">Main plugin command</td>
                     </tr>
                     <tr>
-                      <td className="py-2 px-4 border-b border-gray-700">
-                        <code>/menu</code>
+                      <td className="py-3 px-4 border-b border-blue-900/30">
+                        <code className="bg-gradient-to-r from-blue-900/40 to-indigo-900/40 px-3 py-1 rounded-md border border-blue-800/50 text-blue-200">/menu</code>
                       </td>
-                      <td className="py-2 px-4 border-b border-gray-700">
+                      <td className="py-3 px-4 border-b border-blue-900/30">
                         Open the kit selection menu
                       </td>
                     </tr>
                     <tr>
-                      <td className="py-2 px-4 border-b border-gray-700">
-                        <code>/tc &lt;message&gt;</code>
+                      <td className="py-3 px-4 border-b border-blue-900/30">
+                        <code className="bg-gradient-to-r from-blue-900/40 to-indigo-900/40 px-3 py-1 rounded-md border border-blue-800/50 text-blue-200">/tc &lt;message&gt;</code>
                       </td>
-                      <td className="py-2 px-4 border-b border-gray-700">
+                      <td className="py-3 px-4 border-b border-blue-900/30">
                         Team chat (Team Mode only)
                       </td>
                     </tr>
                     <tr>
-                      <td className="py-2 px-4 border-b border-gray-700">
-                        <code>/ff</code>
+                      <td className="py-3 px-4 border-b border-blue-900/30">
+                        <code className="bg-gradient-to-r from-blue-900/40 to-indigo-900/40 px-3 py-1 rounded-md border border-blue-800/50 text-blue-200">/ff</code>
                       </td>
-                      <td className="py-2 px-4 border-b border-gray-700">
+                      <td className="py-3 px-4 border-b border-blue-900/30">
                         Forfeit the current match
                       </td>
                     </tr>
                     <tr>
-                      <td className="py-2 px-4 border-b border-gray-700">
-                        <code>/profile</code>
+                      <td className="py-3 px-4 border-b border-blue-900/30">
+                        <code className="bg-gradient-to-r from-blue-900/40 to-indigo-900/40 px-3 py-1 rounded-md border border-blue-800/50 text-blue-200">/profile</code>
                       </td>
-                      <td className="py-2 px-4 border-b border-gray-700">
+                      <td className="py-3 px-4 border-b border-blue-900/30">
                         View your player profile and stats
                       </td>
                     </tr>
