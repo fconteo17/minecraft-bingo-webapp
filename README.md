@@ -18,9 +18,11 @@ A real-time multiplayer web application for playing Minecraft Bingo matches. Tea
 - Quest completion tracking
 - Player attribution for completed quests
 - Automatic winner determination
-- Game history tracking
-- Responsive grid layout
-- Dark mode UI
+- Game history tracking with persistent display
+- Live game status indicator with pulsing dot
+- Responsive grid layout for game history
+- Glass container UI design with gradients
+- Dark mode UI with consistent styling
 - API documentation with Swagger UI
 - MongoDB database for persistent storage
 
@@ -85,18 +87,22 @@ yarn dev
 ### Team Mode
 
 1. Two teams compete: Red and Blue
-2. Each game has 25 Minecraft-related quests
+2. Each game has 25 Minecraft-related quests displayed in a grid
 3. Teams race to complete quests first
-4. Winner is determined by:
+4. Live game status is shown with a pulsing green indicator
+5. Game history is always visible below the active game
+6. Winner is determined by:
    - Most completed quests, or
    - First to complete their last quest (in case of a tie)
 
 ### Solo Mode
 
 1. Multiple players compete in a free-for-all format
-2. Each game has 25 Minecraft-related quests
+2. Each game has 25 Minecraft-related quests in a grid layout
 3. Players race to complete quests first
-4. Winner is the player who:
+4. Live game progress is tracked in real-time
+5. Complete game history is displayed below
+6. Winner is the player who:
    - Completes the most quests, or
    - Is the first to complete their last quest (in case of a tie)
 

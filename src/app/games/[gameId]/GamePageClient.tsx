@@ -69,16 +69,22 @@ export default function GamePageClient({ game: initialGame }: GamePageClientProp
   };
 
   return (
-    <main className="container mx-auto px-4 py-8">
-      <GameInfo game={game} />
-      <QuestGrid
-        quests={game.quests}
-        gameId={game.id}
-        gameType={game.gameType}
-        players={game.players}
-        winner={game.winner}
-        onUpdate={handleQuestUpdate}
-      />
-    </main>
+    <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+      <div className="md:col-span-1 bg-cursor-gray-900/40 border border-cursor-gray-800 rounded-lg p-4">
+        <GameInfo game={game} />
+      </div>
+      
+      <div className="md:col-span-4 bg-cursor-gray-900/40 border border-cursor-gray-800 rounded-lg p-4">
+        <h3 className="text-lg font-semibold mb-2">Quest Board</h3>
+        <QuestGrid
+          quests={game.quests}
+          gameId={game.id}
+          gameType={game.gameType}
+          players={game.players}
+          winner={game.winner}
+          onUpdate={handleQuestUpdate}
+        />
+      </div>
+    </div>
   );
 }

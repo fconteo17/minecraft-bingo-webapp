@@ -71,7 +71,7 @@ export default function RankingsPage() {
     return (
       <div className="min-h-screen bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <h1 className="text-3xl font-bold text-center mb-8 text-white">Loading rankings...</h1>
+          <h1 className="text-4xl font-bold text-center mb-8 bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">Loading rankings...</h1>
         </div>
       </div>
     );
@@ -81,7 +81,7 @@ export default function RankingsPage() {
     return (
       <div className="min-h-screen bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <h1 className="text-3xl font-bold text-center mb-8 text-red-400">Error: {error}</h1>
+          <h1 className="text-4xl font-bold text-center mb-8 text-red-400">Error: {error}</h1>
         </div>
       </div>
     );
@@ -90,54 +90,54 @@ export default function RankingsPage() {
   return (
     <div className="min-h-screen bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-3xl font-bold text-center mb-8 text-white">Player Rankings</h1>
+        <h1 className="text-4xl font-bold text-center mb-8 bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">Player Rankings</h1>
 
-        <div className="bg-gray-800 shadow overflow-hidden sm:rounded-lg border border-gray-700">
-          <table className="min-w-full divide-y divide-gray-700">
-            <thead className="bg-gray-800">
+        <div className="bg-gradient-to-r from-blue-900/30 to-indigo-900/30 shadow overflow-hidden sm:rounded-lg border border-blue-800">
+          <table className="min-w-full divide-y divide-blue-800/50">
+            <thead className="bg-blue-900/20">
               <tr>
                 <th
                   scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider"
+                  className="px-6 py-3 text-left text-xs font-medium text-blue-300 uppercase tracking-wider"
                 >
                   Rank
                 </th>
                 <th
                   scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider"
+                  className="px-6 py-3 text-left text-xs font-medium text-blue-300 uppercase tracking-wider"
                 >
                   Player
                 </th>
                 <th
                   scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider"
+                  className="px-6 py-3 text-left text-xs font-medium text-blue-300 uppercase tracking-wider"
                 >
                   MMR
                 </th>
                 <th
                   scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider"
+                  className="px-6 py-3 text-left text-xs font-medium text-blue-300 uppercase tracking-wider"
                 >
                   Tier
                 </th>
                 <th
                   scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider"
+                  className="px-6 py-3 text-left text-xs font-medium text-blue-300 uppercase tracking-wider"
                 >
                   Division
                 </th>
               </tr>
             </thead>
-            <tbody className="bg-gray-800 divide-y divide-gray-700">
+            <tbody className="bg-transparent divide-y divide-blue-800/50">
               {rankings.map((player, index) => (
-                <tr key={player.playerId} className="hover:bg-gray-700 transition-colors">
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+                <tr key={player.playerId} className="hover:bg-blue-800/20 transition-colors">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-blue-200">
                     #{index + 1}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-white">
                     {player.playerName}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-blue-200">
                     {player.mmr}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm">
@@ -145,7 +145,7 @@ export default function RankingsPage() {
                       {player.tier}
                     </span>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-blue-200">
                     {player.division || '-'}
                   </td>
                 </tr>

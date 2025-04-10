@@ -26,27 +26,27 @@ export default function WikiPage() {
   return (
     <main className="container mx-auto px-4 py-8 pb-20">
       <div className="prose prose-invert max-w-none">
-        <h1 className="text-4xl font-bold text-center mb-8">
+        <h1 className="text-4xl font-bold text-center mb-8 bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">
           Minecraft Bingo Plugin - Official Wiki
         </h1>
 
-        <div className="bg-gray-800 p-4 rounded-lg mb-8">
-          <p className="text-center">
+        <div className="bg-gradient-to-r from-blue-900/30 to-indigo-900/30 p-6 rounded-lg border border-blue-800 mb-8">
+          <p className="text-center text-gray-200">
             This wiki provides documentation for the Minecraft Bingo plugin - a lockout minigame
             with specialized kits.
           </p>
           <div className="flex justify-center mt-4 space-x-4">
-            <Link href="/" className="text-blue-400 hover:text-blue-300">
+            <Link href="/" className="text-blue-400 hover:text-blue-300 transition-colors">
               Home
             </Link>
-            <Link href="/wiki/all-kits" className="text-blue-400 hover:text-blue-300">
+            <Link href="/wiki/all-kits" className="text-blue-400 hover:text-blue-300 transition-colors">
               Kit Information
             </Link>
           </div>
         </div>
 
-        <div className="space-y-2 bg-gray-800 p-4 rounded-lg mb-8">
-          <h3 className="text-xl font-semibold">Table of Contents</h3>
+        <div className="space-y-2 bg-gradient-to-r from-blue-900/30 to-indigo-900/30 p-6 rounded-lg border border-blue-800 mb-8">
+          <h3 className="text-xl font-semibold text-blue-300">Table of Contents</h3>
           <ul className="space-y-1">
             <li>
               <a href="#what-is-bingo" className="text-blue-400 hover:text-blue-300">

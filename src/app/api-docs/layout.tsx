@@ -14,47 +14,104 @@ export default function ApiDocsLayout({ children }: { children: React.ReactNode 
 
         /* Fix for the white header */
         .swagger-ui .topbar {
-          background-color: #1a202c;
-          border-bottom: 1px solid #4a5568;
+          display: none;
         }
-        .swagger-ui .topbar .download-url-wrapper .select-label {
-          color: #e2e8f0;
-        }
-        .swagger-ui .topbar .download-url-wrapper input[type='text'] {
-          background: #2d3748;
-          color: #e2e8f0;
-          border: 1px solid #4a5568;
-        }
-        .swagger-ui .topbar .download-url-wrapper .download-url-button {
-          background: #4299e1;
-          color: white;
-          border-color: #2b6cb0;
-        }
+
         .swagger-ui .scheme-container {
-          background-color: #1a202c;
+          background: linear-gradient(to right, rgba(30, 58, 138, 0.3), rgba(49, 46, 129, 0.3));
           color: #e2e8f0;
           box-shadow: none;
-          border-bottom: 1px solid #4a5568;
+          border: 1px solid #1e40af;
+          border-radius: 0.5rem;
+          margin: 0 0 1rem 0;
+          padding: 1rem;
         }
-        .swagger-ui .btn.select-label {
-          background-color: #2d3748;
+
+        .swagger-ui .btn {
+          background: rgba(30, 58, 138, 0.5);
+          color: #93c5fd;
+          border: 1px solid #1e40af;
+          border-radius: 0.375rem;
+          transition: all 0.2s;
+        }
+
+        .swagger-ui .btn:hover {
+          background: rgba(30, 58, 138, 0.7);
+          border-color: #2563eb;
+        }
+
+        .swagger-ui .opblock {
+          background: rgba(30, 58, 138, 0.2);
+          border: 1px solid #1e40af;
+          border-radius: 0.5rem;
+          margin: 0 0 0.5rem 0;
+        }
+
+        .swagger-ui .opblock .opblock-summary {
+          border-color: #1e40af;
+        }
+
+        .swagger-ui .opblock .opblock-summary-method {
+          background: rgba(30, 58, 138, 0.5);
+          color: #93c5fd;
+          border-radius: 0.375rem;
+        }
+
+        .swagger-ui .opblock .opblock-summary-description {
+          color: #93c5fd;
+        }
+
+        .swagger-ui .opblock-tag {
+          border: none;
+          color: #93c5fd;
+        }
+
+        .swagger-ui .opblock-tag:hover {
+          background: rgba(30, 58, 138, 0.3);
+          border-radius: 0.5rem;
+        }
+
+        .swagger-ui input[type="text"] {
+          background: rgba(30, 58, 138, 0.2);
+          border: 1px solid #1e40af;
           color: #e2e8f0;
-          border-color: #4a5568;
         }
-        .swagger-ui .servers-title {
-          color: #e2e8f0;
-        }
-        .swagger-ui .servers > label {
-          color: #e2e8f0;
-        }
+
         .swagger-ui select {
-          background-color: #2d3748;
+          background: rgba(30, 58, 138, 0.2);
+          border: 1px solid #1e40af;
           color: #e2e8f0;
-          border-color: #4a5568;
         }
-        .swagger-ui option {
-          background-color: #2d3748;
+
+        .swagger-ui textarea {
+          background: rgba(30, 58, 138, 0.2);
+          border: 1px solid #1e40af;
           color: #e2e8f0;
+        }
+
+        .swagger-ui .markdown p, 
+        .swagger-ui .markdown pre,
+        .swagger-ui .renderedMarkdown p {
+          color: #93c5fd;
+        }
+
+        .swagger-ui table thead tr td, 
+        .swagger-ui table thead tr th {
+          color: #93c5fd;
+          border-bottom: 1px solid #1e40af;
+        }
+
+        .swagger-ui .response-col_status {
+          color: #93c5fd;
+        }
+
+        .swagger-ui .response-col_description {
+          color: #93c5fd;
+        }
+
+        .swagger-ui .responses-inner h4,
+        .swagger-ui .responses-inner h5 {
+          color: #93c5fd;
         }
 
         /* Top header and info section */

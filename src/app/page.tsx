@@ -42,10 +42,8 @@ export default function HomePage() {
     const loadGames = async () => {
       const live = await fetchLiveGame();
       setLiveGame(live);
-      if (!live) {
-        const history = await fetchGameHistory();
-        setGameHistory(history);
-      }
+      const history = await fetchGameHistory();
+      setGameHistory(history);
       setIsLoading(false);
     };
 
@@ -75,29 +73,65 @@ export default function HomePage() {
   }, [liveGame]);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex justify-center items-center h-64">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+      </div>
+    );
   }
 
   return (
-    <main className="container mx-auto px-4 py-8">
-      <div
-        className={`live-game-container ${isLiveGameVisible && liveGame ? 'live-game-visible' : 'live-game-hidden'}`}
-      >
-        {isLiveGameVisible && liveGame && (
-          <div className="fade-in">
-            <GamePageClient game={liveGame} />
-          </div>
-        )}
-      </div>
+    <div className="container mx-auto px-6 py-12">
+      {/* Hero section - only show when no live game */}
+      {!isLiveGameVisible && (
+        <div className="mb-16 text-center">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 gradient-text">
+            Minecraft Bingo
+          </h1>
+          <p className="text-xl text-blue-200 max-w-3xl mx-auto">
+            A multiplayer game where teams or players compete to complete tasks in Minecraft.
+          </p>
+        </div>
+      )}
 
-      <div className="fade-in">
-        <h2 className="text-2xl font-bold text-gray-100 mt-8">Game History</h2>
-        {gameHistory.map((game) => (
-          <Link key={game.id} href={`/games/${game.id}`} className="block mb-4 fade-in">
-            <GameInfo game={game} />
-          </Link>
-        ))}
+      <div className="space-y-8">
+        {/* Live game section */}
+        <div className={`${isLiveGameVisible && liveGame ? 'live-game-visible' : 'live-game-hidden'}`}>
+          {isLiveGameVisible && liveGame && (
+            <div className="fade-in">
+              <div className="glass-container p-4">
+                <h2 className="text-xl font-bold mb-2 flex items-center">
+                  <span className="inline-block w-2 h-2 bg-green-500 rounded-full mr-2 pulse"></span>
+                  Live Game
+                </h2>
+                <GamePageClient game={liveGame} />
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Game history section */}
+        <div>
+          <div className="glass-container p-4">
+            <h2 className="text-xl font-bold mb-4">Game History</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {gameHistory.length > 0 ? (
+                gameHistory.map((game) => (
+                  <Link key={game.id} href={`/games/${game.id}`} className="cursor-card group">
+                    <div className="p-4">
+                      <GameInfo game={game} />
+                    </div>
+                  </Link>
+                ))
+              ) : (
+                <div className="col-span-full text-center py-8">
+                  <p className="text-blue-200">No games found. Start a new game!</p>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
       </div>
-    </main>
+    </div>
   );
 }
