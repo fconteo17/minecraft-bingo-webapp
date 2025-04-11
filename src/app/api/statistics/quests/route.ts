@@ -53,6 +53,9 @@ export async function GET() {
       for (const quest of game.quests) {
         const questName = typeof quest.name === 'string' ? quest.name : quest.name.name;
         
+        // Skip the placeholder quest
+        if (questName === "???") continue;
+        
         // Update or initialize quest statistics
         const stats = questStatsMap.get(questName) || {
           name: questName,
