@@ -46,6 +46,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     Live
                     <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-400 to-indigo-400 group-hover:w-full transition-all duration-300"></span>
                   </Link>
+                  <Link href="/statistics" className="text-blue-200 hover:text-white transition-colors duration-200 relative group" aria-label="Quest statistics">
+                    Statistics
+                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-400 to-indigo-400 group-hover:w-full transition-all duration-300"></span>
+                  </Link>
                   
                   <a href="https://github.com/fconteo17/minecraft-bingo-webapp" 
                      target="_blank"
