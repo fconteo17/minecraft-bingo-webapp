@@ -4,7 +4,9 @@ import { useEffect, useState } from 'react';
 
 interface QuestStats {
   name: string;
+  totalAppearances: number;
   totalCompletions: number;
+  completionPercentage: number;
   averageTimeMs: number;
   averageTimeFormatted: string;
   fastestTimeMs: number;
@@ -82,7 +84,13 @@ export default function StatisticsPage() {
                   Quest Name
                 </th>
                 <th className="px-6 py-3 text-right text-xs font-medium text-blue-200 uppercase tracking-wider">
-                  Total Completions
+                  Appearances
+                </th>
+                <th className="px-6 py-3 text-right text-xs font-medium text-blue-200 uppercase tracking-wider">
+                  Completions
+                </th>
+                <th className="px-6 py-3 text-right text-xs font-medium text-blue-200 uppercase tracking-wider">
+                  Completion %
                 </th>
                 <th className="px-6 py-3 text-right text-xs font-medium text-blue-200 uppercase tracking-wider">
                   Average Time
@@ -102,7 +110,15 @@ export default function StatisticsPage() {
                     {stat.name}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-right text-blue-200">
+                    {stat.totalAppearances}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-right text-blue-200">
                     {stat.totalCompletions}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-right">
+                    <span className={`${stat.completionPercentage >= 75 ? 'text-green-400' : stat.completionPercentage >= 50 ? 'text-yellow-400' : 'text-red-400'}`}>
+                      {stat.completionPercentage.toFixed(1)}%
+                    </span>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-right text-blue-200">
                     {stat.averageTimeFormatted}

@@ -6,7 +6,9 @@ export const dynamic = 'force-dynamic';
 
 interface QuestStats {
   name: string;
+  totalAppearances: number;
   totalCompletions: number;
+  completionPercentage: number;
   averageTimeMs: number;
   averageTimeFormatted: string;
   fastestTimeMs: number;
@@ -49,16 +51,14 @@ export async function GET() {
 
       // Process each quest in the game
       for (const quest of game.quests) {
-        if (!quest.completedAt) continue;
-
         const questName = typeof quest.name === 'string' ? quest.name : quest.name.name;
-        const completionTime = new Date(quest.completedAt).getTime();
-        const timeToComplete = completionTime - gameStartTime;
-
+        
         // Update or initialize quest statistics
         const stats = questStatsMap.get(questName) || {
           name: questName,
+          totalAppearances: 0,
           totalCompletions: 0,
+          completionPercentage: 0,
           averageTimeMs: 0,
           averageTimeFormatted: '',
           fastestTimeMs: Infinity,
@@ -67,31 +67,41 @@ export async function GET() {
           slowestTimeFormatted: '',
         };
 
-        // Update statistics
-        stats.totalCompletions++;
-        stats.averageTimeMs =
-          (stats.averageTimeMs * (stats.totalCompletions - 1) + timeToComplete) /
-          stats.totalCompletions;
-        stats.averageTimeFormatted = formatTime(stats.averageTimeMs);
+        // Update appearance count
+        stats.totalAppearances++;
+        
+        // If quest was completed, update completion stats
+        if (quest.completedAt) {
+          stats.totalCompletions++;
+          const completionTime = new Date(quest.completedAt).getTime();
+          const timeToComplete = completionTime - gameStartTime;
 
-        if (timeToComplete < stats.fastestTimeMs) {
-          stats.fastestTimeMs = timeToComplete;
-          stats.fastestTimeFormatted = formatTime(timeToComplete);
+          // Update average time
+          stats.averageTimeMs = (stats.averageTimeMs * (stats.totalCompletions - 1) + timeToComplete) / stats.totalCompletions;
+          stats.averageTimeFormatted = formatTime(stats.averageTimeMs);
+          
+          // Update fastest time
+          if (timeToComplete < stats.fastestTimeMs) {
+            stats.fastestTimeMs = timeToComplete;
+            stats.fastestTimeFormatted = formatTime(timeToComplete);
+          }
+          
+          // Update slowest time
+          if (timeToComplete > stats.slowestTimeMs) {
+            stats.slowestTimeMs = timeToComplete;
+            stats.slowestTimeFormatted = formatTime(timeToComplete);
+          }
         }
 
-        if (timeToComplete > stats.slowestTimeMs) {
-          stats.slowestTimeMs = timeToComplete;
-          stats.slowestTimeFormatted = formatTime(timeToComplete);
-        }
+        // Calculate completion percentage
+        stats.completionPercentage = (stats.totalCompletions / stats.totalAppearances) * 100;
 
         questStatsMap.set(questName, stats);
       }
     }
 
     // Convert map to array and sort by name
-    const questStats = Array.from(questStatsMap.values()).sort((a, b) =>
-      a.name.localeCompare(b.name),
-    );
+    const questStats = Array.from(questStatsMap.values()).sort((a, b) => a.name.localeCompare(b.name));
 
     return NextResponse.json(questStats);
   } catch (error) {
